@@ -1,0 +1,8 @@
+---
+
+- name: Set Bika convenience variables
+  set_fact:
+    bika_config: "{{ bika_plone_config[0] }}"
+
+- debug:
+    msg: "BIKA Config={{bika_config}}"

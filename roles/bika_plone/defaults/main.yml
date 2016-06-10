@@ -1,0 +1,41 @@
+---
+
+bika_plone_version: "4.3.8"
+bika_user: bika
+bika_group: bika
+bika_daemon_user: bika_daemon
+bika_plone_initial_password: bika
+bika_plone_instance_name: bikalims
+bika_plone_site_id: bikalims
+bika_plone_create_site: yes
+bika_plone_target_path: /home/{{ bika_user }}
+bika_plone_var_path: /home/{{ bika_user }}/data
+bika_plone_additional_eggs:
+  - bika.lims
+  - bika.health
+bika_plone_additional_versions:
+  - bika.lims=3.1.9
+  - bika.health=3.1.8
+bika_plone_client_count: 2
+bika_plone_zserver_threads: 2
+bika_plone_zeo_ip: 127.0.0.1
+bika_plone_zeo_port: 8100
+bika_plone_client_base_port: 8081
+
+bika_plone_config:
+  - plone_version: "{{ bika_plone_version }}"
+    plone_group: "{{ bika_group }}"
+    plone_buildout_user: "{{ bika_user }}"
+    plone_daemon_user: "{{ bika_daemon_user }}"
+    plone_initial_password: "{{ bika_plone_initial_password }}"
+    plone_instance_name: "{{ bika_plone_instance_name }}"
+    plone_site_id: "{{ bika_plone_site_id }}"
+    plone_create_site: "{{ bika_plone_create_site }}"
+    plone_target_path: "{{ bika_plone_target_path }}"
+    plone_var_path: "{{ bika_plone_var_path }}"
+    plone_additional_eggs: "{{ bika_plone_additional_eggs }}"
+    plone_additional_versions: "{{ bika_plone_additional_versions }}"
+    plone_client_count: "{{ bika_plone_client_count }}"
+    plone_zserver_threads: "{{ bika_plone_zserver_threads }}"
+    plone_zeo_port: "{{ bika_plone_zeo_port }}"
+    plone_client_base_port: "{{ bika_plone_client_base_port }}"

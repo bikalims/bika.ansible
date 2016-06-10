@@ -1,0 +1,16 @@
+---
+
+dependencies:
+
+  - role: geerlingguy.varnish
+    varnish_version: "{{ bika_varnish_version }}"
+    varnish_use_default_vcl: "{{ bika_varnish_use_default_vcl }}"
+    varnish_default_vcl_template_path: "{{ bika_varnish_default_vcl_template_path }}"
+    varnish_default_backend_host: "{{ bika_varnish_default_backend_host }}"
+    varnish_default_backend_port: "{{ bika_varnish_default_backend_port }}"
+    varnish_listen_port: "{{ bika_varnish_listen_port }}"
+    varnish_secret: "{{ bika_varnish_secret }}"
+    varnish_config_path: "{{ bika_varnish_config_path }}"
+    varnish_admin_listen_host: "{{ bika_varnish_admin_listen_host }}"
+    varnish_admin_listen_port: "{{ bika_varnish_admin_listen_port }}"
+    varnish_storage: "{{ bika_varnish_storage }}"

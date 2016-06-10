@@ -1,0 +1,12 @@
+---
+
+- name: Setting variables for -> {{ ansible_distribution }}
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "../vars/{{ ansible_distribution }}.yml"
+
+- name: Install packages for -> {{ ansible_distribution }}
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ bika_packages }}"

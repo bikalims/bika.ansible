@@ -1,0 +1,6 @@
+---
+
+dependencies:
+  - role: geerlingguy.haproxy
+    haproxy_frontend_bind_address: "{{ bika_haproxy_frontend_bind_address }}"
+    haproxy_frontend_port: "{{ bika_haproxy_frontend_port }}"

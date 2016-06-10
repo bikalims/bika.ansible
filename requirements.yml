@@ -1,0 +1,16 @@
+---
+
+# Ansible Requirements File
+# https://docs.ansible.com/ansible/galaxy.html#advanced-control-over-role-requirements-files
+#
+# Install via: ansible-galaxy install -r requirements.yml
+
+- src: https://github.com/plone/ansible.plone_server
+  version: master
+  name: plone.plone_server
+
+- src: geerlingguy.varnish
+
+- src: geerlingguy.nginx
+
+- src: geerlingguy.haproxy

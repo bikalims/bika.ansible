@@ -1,0 +1,5 @@
+---
+
+dependencies:
+  - role: plone.plone_server
+    plone_config: "{{ bika_plone_config[0] }}"

@@ -1,0 +1,24 @@
+---
+
+# Note: Roles dependencies are always executed before the role that
+#       includes them, and are recursive.
+#       https://docs.ansible.com/ansible/playbooks_roles.html#role-dependencies
+dependencies:
+
+    # BIKA BASE
+  - role: bika_base
+
+    # BIKA PLONE
+  - role: bika_plone
+
+    # BIKA HAPROXY
+  - role: bika_haproxy
+
+    # BIKA VARNISH
+  - role: bika_varnish
+
+    # BIKA NGINX
+  - role: bika_nginx
+
+    # BIKA SECURITY
+  - role: bika_security

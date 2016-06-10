@@ -1,0 +1,13 @@
+---
+
+bika_varnish_version: "4.0"
+bika_varnish_use_default_vcl: true
+bika_varnish_default_vcl_template_path: roles/bika_varnish/templates/default.vcl.j2
+bika_varnish_default_backend_host: "127.0.0.1"
+bika_varnish_default_backend_port: "8080"
+bika_varnish_listen_port: "8888"
+bika_varnish_secret: "11bac9e6-1e39-4119-8078-974375b96c95"
+bika_varnish_config_path: /etc/varnish
+bika_varnish_admin_listen_host: "127.0.0.1"
+bika_varnish_admin_listen_port: "6082"
+bika_varnish_storage: "file,/var/lib/varnish/varnish_storage.bin,1024M"

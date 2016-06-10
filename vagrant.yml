@@ -1,0 +1,15 @@
+---
+
+- hosts: bika
+  become: yes
+  gather_facts: yes
+  pre_tasks:
+    - name: Update APT package cache
+      action: apt update_cache=yes
+    - name: Upgrade APT to the lastest packages
+      action: apt upgrade=full
+    - name: Include Vagrant Variables `vagrant_configure.yml`
+      include_vars: vagrant_configure.yml
+
+  roles:
+    - role: bika
