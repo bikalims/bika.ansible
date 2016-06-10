@@ -86,6 +86,6 @@ backend bika_backend
     option httpchk {{ bika_haproxy_backend_httpchk }}
 {% endif %}
 
-{% for client in range(1, bika_plone_client_count|int + 1) %}
-    server {{ bika_plone_instance_name }}_{{ client }} localhost:{{ bika_plone_client_base_port | int + 1 }} cookie {{ bika_plone_instance_name }}_{{ client }} check
+{% for client in range(0, bika_plone_client_count|int ) %}
+    server {{ bika_plone_instance_name }}_{{ client + 1 }} localhost:{{ bika_plone_client_base_port | int + client }} cookie {{ bika_plone_instance_name }}_{{ client + 1 }} check
 {% endfor %}
