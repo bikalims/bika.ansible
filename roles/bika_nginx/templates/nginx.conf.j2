@@ -36,10 +36,11 @@ http {
 
     keepalive_timeout  {{ nginx_keepalive_timeout }};
     keepalive_requests {{ nginx_keepalive_requests }};
-    proxy_read_timeout {{ nginx_proxy_read_timeout }};
 
-    #gzip  on;
-
+{% if bika_nginx_extra_http_options %}
+    # Bika Extra Options
+    {{ bika_nginx_extra_http_options }}
+{% endif %}
 
     upstream haproxy {
         server 127.0.0.1:{{ bika_haproxy_frontend_port }};

@@ -2,7 +2,13 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
 
+    root {{ bika_nginx_html_root }};
+
     location / {
+        set $backend http://varnish;
+        if ($uri ~* "@@API") {
+            set $backend http://api;
+        }
 
         if ($http_cookie ~* "__ac=([^;]+)(?:;|$)" ) {
             add_header "X-BIKA-AUTHENTICATED" "YES";
@@ -12,6 +18,26 @@ server {
         proxy_set_header        X-Real-IP       $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
         rewrite                 ^(.*)$ /VirtualHostBase/$scheme/$host/{{ bika_plone_site_id }}/VirtualHostRoot/$1 break;
-        proxy_pass              http://haproxy;
+        proxy_pass              $backend;
+    }
+
+{% for client in range(0, bika_plone_client_count|int ) %}
+    location /{{ bika_plone_instance_name }}_{{ client + 1 }} {
+        proxy_set_header Host $http_host/{{ bika_plone_instance_name }}_{{ client + 1 }};
+        proxy_pass       http://127.0.0.1:{{ bika_plone_client_base_port | int + client }}/;
+    }
+{% endfor %}
+
+    # Bika Control Panel
+    location /bika_control_panel {
+        try_files $uri $uri.html /;
+    }
+
+    # HAProxy
+    location /haproxy-status {
+        proxy_set_header        Host            $http_host;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass              http://haproxy/haproxy-status;
     }
 }

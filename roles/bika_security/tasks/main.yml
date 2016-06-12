@@ -12,8 +12,5 @@
 - name: Allow HTTPS traffic
   ufw: rule=allow port=443 proto=tcp
 
-- name: Allow HAProxy traffic
-  ufw: rule=allow port=8080 proto=tcp
-
 - name: Setup ufw
   ufw: state=enabled policy=deny

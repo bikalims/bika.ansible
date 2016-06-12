@@ -1,21 +1,50 @@
 ---
 
-- name: Copy Bika NGINX configuration
+- name: Copy Bika NGINX Config
   template:
     src: nginx.conf.j2
-    dest: "{{ nginx_conf_file_path }}"
+    dest: "{{ bika_nginx_conf }}"
     owner: root
-    group: "{{ root_group }}"
+    group: root
     mode: 0644
   notify:
     - reload nginx
   tags: bika-nginx
 
-- name: Copy Bika NGINX Config
+- name: Copy Bika NGINX VHOST Config
   template:
     src: bika.conf.j2
-    dest: "{{ nginx_vhost_path }}/bika.conf"
+    dest: "{{ bika_nginx_sites_available }}/bika.conf"
+    owner: root
+    group: root
     mode: 0644
   notify:
     - reload nginx
   tags: bika-nginx
+
+- name: Enable Bika NGINX VHOST Configs
+  shell: cd {{ bika_nginx_sites_enabled }} && ln -sf {{ bika_nginx_sites_available }}/bika* .
+  notify:
+    - reload nginx
+  tags: bika-nginx
+
+- name: Ensure Bika HTML Root
+  file:
+    path: "{{ bika_nginx_html_root }}"
+    state: directory
+  tags:
+    - bika-nginx
+    - bika-html
+
+- name: Copy Bika HTML Files
+  template:
+    src: bika_control_panel.html.j2
+    dest: "{{ bika_nginx_html_root }}/bika_control_panel.html"
+  notify:
+    - reload nginx
+  tags:
+    - bika-nginx
+    - bika-html
+
+- name: Ensure NGINX is started and enabled to start at boot.
+  service: name=nginx state=started enabled=yes

@@ -1,6 +1,5 @@
 ---
 
 dependencies:
-
   - role: geerlingguy.nginx
     tags: bika-nginx
