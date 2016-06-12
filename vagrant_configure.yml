@@ -1,3 +1,11 @@
 ---
 
+bika_plone_additional_eggs:
+  - bika.lims
+  - plone.jsonapi.routes
+bika_plone_additional_versions:
+  - bika.lims=3.1.9
+  - plone.jsonapi.routes=0.8.6
 bika_plone_client_count: 2
+bika_haproxy_stats_password: ha-admin
+bika_plone_initial_password: bika-admin

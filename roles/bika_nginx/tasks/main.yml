@@ -46,5 +46,15 @@
     - bika-nginx
     - bika-html
 
+- name: Remove default nginx vhost config file
+  file:
+    path: "{{ nginx_default_vhost_path }}"
+    state: absent
+  when: nginx_remove_default_vhost
+  notify:
+    - reload nginx
+  tags:
+    - bika-nginx
+
 - name: Ensure NGINX is started and enabled to start at boot.
   service: name=nginx state=started enabled=yes
