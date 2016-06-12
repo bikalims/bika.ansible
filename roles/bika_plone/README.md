@@ -96,21 +96,30 @@ and cron jobs. It is also the name of the folder where Bika gets installed, e.g.
 
 The id of the site if `bika_plone_site` is set to `yes`
 
-    bika_plone_create_site: no
+    bika_plone_create_site: yes
 
 Set to `yes` to create a Plone site automatially.
 
     bika_plone_additional_eggs:
       - bika.lims
+      - bika.health
 
 List additional Python packages (beyond Plone and the Python Imaging Library)
 that you want available in the Python package environment.
 
     bika_plone_additional_versions:
       - bika.lims=3.1.9
+      - bika.health=3.1.8
 
 The version pins you specify here will be added to the [versions] section of
 your Bika buildout.
+
+    bika_plone_extension_profiles:
+      - bika.lims:default
+      - bika.health:default
+
+List additional Plone profiles which should be activated in the new Plone site.
+These are only activated if the `bika_plone_create_site` is set.
 
     bika_plone_target_path: /home/{{ bika_user }}
 

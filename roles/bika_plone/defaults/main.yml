@@ -16,6 +16,9 @@ bika_plone_additional_eggs:
 bika_plone_additional_versions:
   - bika.lims=3.1.9
   - bika.health=3.1.8
+bika_plone_extension_profiles:
+  - bika.lims:default
+  - bika.health:default
 bika_plone_client_count: 2
 bika_plone_zserver_threads: 2
 bika_plone_zeo_ip: 127.0.0.1
