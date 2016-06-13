@@ -114,9 +114,7 @@ that you want available in the Python package environment.
 The version pins you specify here will be added to the [versions] section of
 your Bika buildout.
 
-    bika_plone_extension_profiles:
-      - bika.lims:default
-      - bika.health:default
+    bika_plone_extension_profiles: []
 
 List additional Plone profiles which should be activated in the new Plone site.
 These are only activated if the `bika_plone_create_site` is set.

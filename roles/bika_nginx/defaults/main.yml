@@ -9,6 +9,12 @@ bika_nginx_conf: "{{ bika_nginx_path }}/nginx.conf"
 bika_nginx_extra_http_options: |
   proxy_read_timeout 600s;
 
+# VHOSTS
+bika_vhosts: []
+# Example:
+#  - example.com
+#  - test.example.com
+
 # https://github.com/geerlingguy/ansible-role-nginx
 nginx_remove_default_vhost: true
 nginx_server_names_hash_bucket_size: "256"

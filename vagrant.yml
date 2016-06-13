@@ -10,6 +10,8 @@
       action: apt upgrade=full
     - name: Include Vagrant Variables `vagrant_configure.yml`
       include_vars: vagrant_configure.yml
+      tags:
+        - always
 
   roles:
     - role: bika

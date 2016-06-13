@@ -11,10 +11,21 @@
     - reload nginx
   tags: bika-nginx
 
-- name: Copy Bika NGINX VHOST Config
+- name: Copy Bika Administrative VHOST Config
   template:
     src: bika.conf.j2
     dest: "{{ bika_nginx_sites_available }}/bika.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
+  tags: bika-nginx
+
+- name: Copy Bika configured VHOSTS Config
+  template:
+    src: bika_vhosts.conf.j2
+    dest: "{{ bika_nginx_sites_available }}/bika_vhosts.conf"
     owner: root
     group: root
     mode: 0644

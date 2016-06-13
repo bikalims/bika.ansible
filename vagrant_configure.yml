@@ -7,7 +7,7 @@ bika_plone_additional_eggs:
   - plone.jsonapi.routes
 bika_plone_additional_versions:
   - bika.lims=3.1.9
-  - bika.lims=3.1.8
+  - bika.health=3.1.8
   - plone.jsonapi.routes=0.8.6
 bika_plone_extension_profiles:
   - bika.lims:default
@@ -35,6 +35,8 @@ bika_varnish_listen_port: "8888"
 
 # NGINX (Frontend)
 bika_vhosts:
-  - example.com
+  - vagrant.bikalabs.com
 
 # Security Settings
+bika_firewall_open_tcp_ports: [80, 443]
+bika_firewall_use_fail2ban: yes

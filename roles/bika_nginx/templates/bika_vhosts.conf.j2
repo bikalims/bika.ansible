@@ -1,0 +1,25 @@
+
+{% for vhost in bika_vhosts %}
+# Bika VHOST: {{ vhost }}
+server {
+    listen 80 {{ vhost }} www.{{ vhost }};
+    listen [::]:80 {{ vhost }} www.{{ vhost }} ipv6only=on;
+
+    location / {
+        set $backend http://varnish;
+        if ($uri ~* "@@API") {
+            set $backend http://api;
+        }
+
+        if ($http_cookie ~* "__ac=([^;]+)(?:;|$)" ) {
+            add_header "X-BIKA-AUTHENTICATED" "YES";
+        }
+
+        proxy_set_header        Host            $http_host;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        rewrite                 ^(.*)$ /VirtualHostBase/$scheme/$host/{{ bika_plone_site_id }}/VirtualHostRoot/$1 break;
+        proxy_pass              $backend;
+    }
+}
+{% endfor %}

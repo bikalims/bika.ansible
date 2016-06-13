@@ -3,5 +3,6 @@
 dependencies:
   - role: HanXHX.firewall
     firewall_open_tcp_ports: "{{ bika_firewall_open_tcp_ports }}"
+    firewall_use_fail2ban: "{{ bika_firewall_use_fail2ban }}"
     tags:
       - bika-security
