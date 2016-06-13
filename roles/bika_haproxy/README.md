@@ -28,6 +28,7 @@ Available variables are listed below, along with default values (see
 
 
 
+
 [1]: http://www.haproxy.org "HAProxy"
 [2]: https://galaxy.ansible.com/geerlingguy/haproxy "HAProxy Ansible Role"
 [3]: https://github.com/bikalabs/bika.lims/wiki "Bika LIMS"

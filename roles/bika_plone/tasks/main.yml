@@ -6,3 +6,31 @@
 
 - debug:
     msg: "BIKA Config={{bika_config}}"
+
+- name: Insert Supervisor HTTP Server Block
+  blockinfile:
+    dest: /etc/supervisor/supervisord.conf
+    block: |
+      [inet_http_server]
+      port = {{ bika_supervisor_http_port }}
+      username = {{ bika_supervisor_http_user }}
+      password = {{ bika_supervisor_http_pass }}
+    state: present
+  when: bika_supervisor_with_http
+  notify: restart supervisor
+  tags:
+    - bika-supervisor
+
+- name: Remove Supervisor HTTP Server Block
+  blockinfile:
+    dest: /etc/supervisor/supervisord.conf
+    block: |
+      [inet_http_server]
+      port = {{ bika_supervisor_http_port }}
+      username = {{ bika_supervisor_http_user }}
+      password = {{ bika_supervisor_http_pass }}
+    state: absent
+  when: not bika_supervisor_with_http
+  notify: restart supervisor
+  tags:
+    - bika-supervisor

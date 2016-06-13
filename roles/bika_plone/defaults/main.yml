@@ -1,5 +1,6 @@
 ---
 
+# Convenience variables for easy overwriting
 bika_plone_version: "4.3.8"
 bika_user: bika
 bika_group: bika
@@ -24,7 +25,17 @@ bika_plone_zserver_threads: 2
 bika_plone_zeo_ip: 127.0.0.1
 bika_plone_zeo_port: 8100
 bika_plone_client_base_port: 8081
+bika_plone_zodb_cache_size: 30000
 
+# Supervisor Daemon HTTP
+bika_supervisor_with_http: no
+bika_supervisor_http_port: "127.0.0.1:9001"
+bika_supervisor_http_user: "admin"
+bika_supervisor_http_pass: "admin"
+
+
+# This configuration gets passed to the `plone_server` role, see
+# `meta/main.yml`.
 bika_plone_config:
   - plone_version: "{{ bika_plone_version }}"
     plone_group: "{{ bika_group }}"
@@ -38,7 +49,9 @@ bika_plone_config:
     plone_var_path: "{{ bika_plone_var_path }}"
     plone_additional_eggs: "{{ bika_plone_additional_eggs }}"
     plone_additional_versions: "{{ bika_plone_additional_versions }}"
+    plone_extension_profiles: "{{ bika_plone_extension_profiles }}"
     plone_client_count: "{{ bika_plone_client_count }}"
     plone_zserver_threads: "{{ bika_plone_zserver_threads }}"
     plone_zeo_port: "{{ bika_plone_zeo_port }}"
     plone_client_base_port: "{{ bika_plone_client_base_port }}"
+    plone_zodb_cache_size: "{{ bika_plone_zodb_cache_size }}"

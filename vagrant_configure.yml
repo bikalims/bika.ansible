@@ -1,13 +1,40 @@
 ---
 
+# Bika Plone
 bika_plone_additional_eggs:
   - bika.lims
+  - bika.health
   - plone.jsonapi.routes
 bika_plone_additional_versions:
   - bika.lims=3.1.9
+  - bika.lims=3.1.8
   - plone.jsonapi.routes=0.8.6
 bika_plone_extension_profiles:
   - bika.lims:default
+  - bika.health:default
 bika_plone_client_count: 2
-bika_haproxy_stats_password: ha-admin
-bika_plone_initial_password: bika-admin
+bika_plone_initial_password: admin
+
+# Supervisor HTTP UI
+bika_supervisor_with_http: yes
+bika_supervisor_http_user: admin
+bika_supervisor_http_pass: admin
+
+# HAProxy
+bika_haproxy_with_http_stats: yes
+bika_haproxy_stats_user: admin
+bika_haproxy_stats_pass: admin
+bika_haproxy_frontend_bind_address: "127.0.0.1"
+bika_haproxy_frontend_port: "8080"
+
+# Varnish Backend (HAProxy)
+bika_varnish_default_backend_host: "127.0.0.1"
+bika_varnish_default_backend_port: "8080"
+# Varnish Frontend (used by NGINX as upstream)
+bika_varnish_listen_port: "8888"
+
+# NGINX (Frontend)
+bika_vhosts:
+  - example.com
+
+# Security Settings

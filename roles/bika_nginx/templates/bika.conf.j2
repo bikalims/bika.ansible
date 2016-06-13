@@ -33,6 +33,18 @@ server {
         try_files $uri $uri.html /;
     }
 
+{% if bika_supervisor_with_http  %}
+    # Supervisor
+    location /supervisor/ {
+        index index.html;
+        proxy_set_header       Host            $host/supervisor;
+        proxy_set_header       X-Real-IP       $remote_addr;
+        proxy_set_header       X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass             http://{{ bika_supervisor_http_port }}/;
+    }
+{% endif %}
+
+{% if bika_haproxy_with_http_stats %}
     # HAProxy
     location /haproxy-status {
         proxy_set_header        Host            $http_host;
@@ -40,4 +52,6 @@ server {
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_pass              http://haproxy/haproxy-status;
     }
+{% endif %}
+
 }

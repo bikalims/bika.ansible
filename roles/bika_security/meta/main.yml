@@ -1,0 +1,7 @@
+---
+
+dependencies:
+  - role: HanXHX.firewall
+    firewall_open_tcp_ports: "{{ bika_firewall_open_tcp_ports }}"
+    tags:
+      - bika-security

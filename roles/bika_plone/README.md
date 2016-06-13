@@ -151,6 +151,40 @@ The port where the ZEO Server listens for connections.
 The base port for the ZEO clients. Per default, two ZEO clients will be
 installed, with the follwoing addresses: `127.0.0.1:8081` and `127.0.0.1:8082`.
 
+    bika_plone_zodb_cache_size: 30000
+
+Defines the objects to keep in the ZODB cache.
+
+Note: A higher value consumes more RAM
+
+
+## Supervisor HTTP
+
+This role can enable or disable the HTTP UI of supervisor, which is accessible
+on `http://<server-ip>/supervisor/`.
+
+Important: It is possible to start/stop the Instances through this UI, so handle
+           with care and set a strong password.
+
+    bika_supervisor_with_http: no
+
+Enable/Disable HTTP UI of Supervisor.
+
+    bika_supervisor_http_port: "127.0.0.1:9001"
+
+The listen address and port of the HTTP UI.
+Note: The `bika_nginx` role will make this UI accessible through
+      `http://<server-ip>/haproxy/`
+
+    bika_supervisor_http_user: "admin"
+
+HTTP Basic-Auth username for the Supervisor HTTP UI.
+
+    bika_supervisor_http_pass: "admin"
+
+HTTP Basic-Auth password for the Supervisor HTTP UI.
+
+
 [1]: https://github.com/bikalabs/bika.lims/wiki "Bika LIMS"
 [2]: https://plone.org "Plone"
 [3]: https://galaxy.ansible.com "Ansible Galaxy"

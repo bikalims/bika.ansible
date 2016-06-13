@@ -41,11 +41,13 @@ defaults
   # Enable status page at this URL, on the port HAProxy is bound to
   stats enable
 
+{% if bika_haproxy_with_http_stats %}
   # http://cbonte.github.io/haproxy-dconv/configuration-1.4.html#stats uri
   stats uri /haproxy-status
   stats refresh 5s
   stats realm Haproxy statistics
-  stats auth admin:{{ bika_haproxy_stats_password }}
+  stats auth {{ bika_haproxy_stats_user }}:{{ bika_haproxy_stats_pass }}
+{% endif %}
 
   timeout connect 60s
   timeout client  300s
