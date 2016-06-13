@@ -35,7 +35,10 @@ bika_varnish_listen_port: "8888"
 
 # NGINX (Frontend)
 bika_vhosts:
-  - vagrant.bikalabs.com
+  - example.bikalabs.com
+
+bika_ssl_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+bika_ssl_certificate_key: /etc/ssl/private/ssl-cert-snakeoil.key
 
 # Security Settings
 bika_firewall_open_tcp_ports: [80, 443]

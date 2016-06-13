@@ -15,6 +15,10 @@ bika_vhosts: []
 #  - example.com
 #  - test.example.com
 
+# SSL
+bika_ssl_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+bika_ssl_certificate_key: /etc/ssl/private/ssl-cert-snakeoil.key
+
 # https://github.com/geerlingguy/ansible-role-nginx
 nginx_remove_default_vhost: true
 nginx_server_names_hash_bucket_size: "256"

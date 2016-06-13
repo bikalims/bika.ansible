@@ -1,4 +1,4 @@
 ---
 
 bika_firewall_open_tcp_ports: [80, 443]
-bika_firewall_use_fail2ban: yes
+bika_firewall_use_fail2ban: no
