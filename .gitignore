@@ -94,3 +94,7 @@ roles/geerlingguy.varnish
 roles/plone.plone_server
 roles/geerlingguy*
 roles/HanXHX.firewall
+customer.retry
+customer.yml
+customer_configure.yml
+customer_hosts.cfg
