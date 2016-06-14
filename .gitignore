@@ -98,3 +98,6 @@ customer.retry
 customer.yml
 customer_configure.yml
 customer_hosts.cfg
+
+# PyCharm
+.idea
