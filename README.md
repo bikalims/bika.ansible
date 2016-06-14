@@ -66,12 +66,14 @@ As soon as the machine is running, you can start the provisioning process:
 
     ansible-playbook -i vagrant_hosts.cfg vagrant.yml
 
+> Depending on your configuration, you may need to edit the vagrant_hosts.cfg and change the location of the private_key file that is used.
+
 Open a browser and navigate to: http://192.168.33.10
 
 
 ## Dependencies
 
-This role depends on the follwoing Ansible Roles:
+This role depends on the following Ansible Roles:
 
 - [Plone](https://galaxy.ansible.com/plone/plone_server)
 - [HAProxy](https://galaxy.ansible.com/geerlingguy/haproxy)
