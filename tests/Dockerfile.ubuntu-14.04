@@ -8,7 +8,10 @@ RUN apt-get update
 RUN apt-get install -y ansible
 
 # Install Roles
-RUN ansible-galaxy -r /etc/ansible/roles/role_under_test/requirements.yml
+RUN ansible-galaxy install -r /etc/ansible/roles/role_under_test/requirements.yml
 
 # Install Ansible inventory file
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
+
+# Add roles directory
+RUN echo "roles_path = /etc/ansible/roles/role_under_test/roles" >> /etc/ansible.cfg
