@@ -7,6 +7,10 @@ dist: trusty
 env:
   - SITE=test.yml
 
+cache:
+  directories:
+  - buildout-cache
+
 before_install:
   # Make sure everything's up to date.
   - sudo apt-get update -qq
