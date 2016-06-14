@@ -1,25 +1,29 @@
 ---
-language: python
-python: "2.7"
 sudo: required
-dist: trusty
 
 env:
-  - SITE=test.yml
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/my_init
+    run_opts: ""
+
+services:
+  - docker
 
 before_install:
-  # Make sure everything's up to date.
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-  - echo "localhost" > inventory
-  - ansible-galaxy install -r requirements.yml
+  # Customize container
+  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i inventory $SITE --syntax-check"
+  - container_id=$(mktemp)
+  # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i inventory $SITE --connection=local --become --skip-tags bika-apt -vvv"
+  # Ansible syntax check.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+
+  # Clean up
+  - 'sudo docker stop "$(cat ${container_id})"'
