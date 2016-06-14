@@ -4,8 +4,8 @@
   become: yes
   gather_facts: yes
   vars:
-
-    bika_plone:
+    plone_initial_password: bika
+    bika_servers:
       - plone_version: "4.3.8"
         plone_buildout_user: bika
         group: bika
@@ -26,7 +26,7 @@
   roles:
 
     - role: bika
-      bika_plone_config: "{{ bika_plone[0] }}"
+      bika_plone_config: "{{ bika_servers[0] }}"
 
   tasks:
     # make sure Plone Daemons have had time to come up
