@@ -18,13 +18,13 @@
 
 - name: Upgrade APT to the lastest packages
   action: apt upgrade=full
-  notify: reboot
+#  notify: reboot
   tags:
     - bika-base
 
 - name: Install required packages
   apt: state=installed pkg=unattended-upgrades
-  notify: reboot
+#  notify: reboot
   when: bika_apt_unattended_upgrade == 1
   tags:
     - bika-base
