@@ -15,12 +15,14 @@
   action: apt update_cache=yes
   tags:
     - bika-base
+    - bika-apt
 
 - name: Upgrade APT to the lastest packages
   action: apt upgrade=full
 #  notify: reboot
   tags:
     - bika-base
+    - bika-apt
 
 - name: Install required packages
   apt: state=installed pkg=unattended-upgrades
