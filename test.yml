@@ -4,6 +4,8 @@
   become: yes
   gather_facts: yes
   vars:
+    bika_plone_initial_password: bika
+
     bika_servers:
       - bika_plone_version: "4.3.8"
         bika_user: bika
