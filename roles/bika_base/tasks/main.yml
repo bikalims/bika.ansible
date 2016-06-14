@@ -1,6 +1,6 @@
 ---
 
-- name: Ansible Version too old
+- name: Fail if Ansible version is too old
   fail: msg="Ansible version too old, please update your kit. 'pip install -U Ansible'"
   when: ansible_version.major < 2
 

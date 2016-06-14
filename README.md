@@ -6,7 +6,7 @@
 Each role contains a `README.md` with further documentation.
 
 > **Note:**
-> Ansible Version > 2 is required
+> Ansible Version >= 2 is required
 
 ## Getting started
 
