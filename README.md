@@ -1,5 +1,7 @@
 # Bika Ansible
 
+[![Build Status](https://travis-ci.org/bikalabs/bika.ansible.svg?branch=master)](https://travis-ci.org/bikalabs/bika.ansible)
+
 [Bika Ansible][6] provides a set of [Ansible Roles][7] to set up a
 [Bika LIMS][1] installation on a Linux server.
 
