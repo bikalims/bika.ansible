@@ -5,6 +5,9 @@
 
 Each role contains a `README.md` with further documentation.
 
+> **Note:**
+> Ansible Version > 2 is required
+
 ## Getting started
 
 Install dependencies using `ansible-galaxy`
@@ -74,6 +77,7 @@ This role depends on the follwoing Ansible Roles:
 - [HAProxy](https://galaxy.ansible.com/geerlingguy/haproxy)
 - [Varnish](https://galaxy.ansible.com/geerlingguy/varnish)
 - [NGINX](https://galaxy.ansible.com/geerlingguy/nginx)
+- [Firewall](https://galaxy.ansible.com/HanXHX/firewall)
 
 
 

@@ -1,0 +1,7 @@
+---
+
+# APT update intervals (`/etc/apt/apt.conf.d/10periodic`)
+bika_apt_update_package_lists: 1
+bika_apt_download_upgradable_packages: 1
+bika_apt_autocleaninterval: 7
+bika_apt_unattended_upgrade: 1

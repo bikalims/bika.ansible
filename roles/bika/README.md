@@ -9,6 +9,9 @@ following components:
 - Bika Varnish (Cache Proxy)
 - Bika NGINX (Webserver)
 
+> **Note:**
+> Ansible Version > 2 is required
+
 ## Dependencies
 
 This role depends on the follwoing Ansible Roles:
@@ -26,10 +29,7 @@ The roles will be installed to the `roles_path` defined in `ansible.cfg` (also
 in this repository), which will use the local `roles` folder.
 
     ansible-galaxy install -r requirements.yml
-    - plone.plone_server is already installed, skipping.
-    - geerlingguy.varnish is already installed, skipping.
-    - geerlingguy.nginx is already installed, skipping.
-    - geerlingguy.haproxy is already installed, skipping.
+
 
 ## Playbook
 

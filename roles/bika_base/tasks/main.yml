@@ -1,12 +1,48 @@
 ---
 
+- name: Ansible Version too old
+  fail: msg="Ansible version too old, please update your kit. 'pip install -U Ansible'"
+  when: ansible_version.major < 2
+
 - name: Setting variables for -> {{ ansible_distribution }}
   include_vars: "{{ item }}"
   with_first_found:
     - "../vars/{{ ansible_distribution }}.yml"
+  tags:
+    - bika-base
+
+- name: Update APT package cache
+  action: apt update_cache=yes
+  tags:
+    - bika-base
+
+- name: Upgrade APT to the lastest packages
+  action: apt upgrade=full
+  notify: reboot
+  tags:
+    - bika-base
+
+- name: Install required packages
+  apt: state=installed pkg=unattended-upgrades
+  notify: reboot
+  when: bika_apt_unattended_upgrade == 1
+  tags:
+    - bika-base
 
 - name: Install packages for -> {{ ansible_distribution }}
   apt:
     pkg: "{{ item }}"
     state: present
   with_items: "{{ bika_packages }}"
+  tags:
+    - bika-base
+
+- name: Adjust APT update intervals
+  template:
+    src: 10periodic.j2
+    dest: /etc/apt/apt.conf.d/10periodic
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - bika-base
