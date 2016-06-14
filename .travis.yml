@@ -4,7 +4,7 @@ sudo: required
 env:
   - distribution: ubuntu
     version: 14.04
-    init: /sbin/my_init
+    init: /sbin/init
     run_opts: ""
 
 services:
