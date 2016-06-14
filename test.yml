@@ -3,30 +3,8 @@
 - hosts: all
   become: yes
   gather_facts: yes
-  vars:
-    plone_initial_password: bika
-    bika_servers:
-      - plone_version: "4.3.8"
-        plone_buildout_user: bika
-        group: bika
-        daemon_user: bika_daemon
-        plone_initial_password: bika
-        plone_target_path: /home/{{ bika_user }}
-        plone_var_path: /home/{{ bika_user }}/data
-        plone_additional_eggs:
-          - bika.lims
-          - bika.health
-        plone_additional_versions:
-          - bika.lims=3.1.9
-          - bika.health=3.1.8
-        plone_extension_profiles:
-          - bika.lims:default
-          - bika.health:default
-
   roles:
-
     - role: bika
-      bika_plone_config: "{{ bika_servers[0] }}"
 
   tasks:
     # make sure Plone Daemons have had time to come up
