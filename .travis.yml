@@ -23,4 +23,4 @@ script:
   - "ansible-playbook -i inventory $SITE --syntax-check"
 
   # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i inventory $SITE --connection=local --become --skip-tags bika-apt"
+  - "ansible-playbook -i inventory $SITE --connection=local --sudo --skip-tags bika-apt"
