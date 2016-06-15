@@ -18,15 +18,16 @@ before_install:
 
 script:
   - container_id=$(mktemp)
-  # Run container in detached state
-  # Mount the current directory to /bika
+
+  # Run container in detached state and mount the current directory to /bika
   - 'sudo docker run --detach --volume="${PWD}":/bika:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
+
+  # Install Ansible requirements
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install -r /bika/requirements.yml'
 
   # Ansible syntax check of `test.yml`
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /bika/test.yml --syntax-check'
 
-  # Install Ansible requirements
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install -r /bika/requirements.yml'
   # Test Bika Role
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /bika/test.yml --skip-tags bika-security'
 
