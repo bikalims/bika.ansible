@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+version=14.04
+distribution=ubuntu
+run_opts=""
+init="/sbin/init"
+
+# Build the image from the specified dockerfile in the docker folder
+docker build --rm=true --file=docker/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible docker
+
+container_id=$(mktemp)
+
+# Mount the current directory to /bika
+docker run --detach --volume="${PWD}":/bika:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"
+
+# Execute the playbook with some additional commands
+docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install -r /bika/requirements.yml
+docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /bika/test.yml --skip-tags bika-security
+
+# Cleanup
+docker stop "$(cat ${container_id})"
