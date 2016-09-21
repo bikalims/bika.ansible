@@ -2,4 +2,6 @@
 
 dependencies:
   - role: plone.plone_server
+    # XXX: we need to overwrite some facts which are set within this role (see task/main.yml)
+    plone_instance_backup_path: "{{ bika_plone_backup_path }}"
     plone_config: "{{ bika_plone_config[0] }}"

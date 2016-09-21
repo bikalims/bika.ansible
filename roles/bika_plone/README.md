@@ -30,6 +30,8 @@ Available variables are listed below, along with default values (see
         plone_create_site: "{{ bika_plone_create_site }}"
         plone_target_path: "{{ bika_plone_target_path }}"
         plone_var_path: "{{ bika_plone_var_path }}"
+        plone_backup_path: "{{ bika_plone_backup_path }}"
+        plone_backup_at: "{{ bika_plone_backup_at }}"
         plone_additional_eggs: "{{ bika_additional_eggs }}"
         plone_additional_versions: "{{ bika_additional_versions }}"
         plone_client_count: "{{ bika_plone_client_count }}"
@@ -127,6 +129,21 @@ Sets the Bika installation directory.
 
 The `var` directory to use. This is where the `filestorage` and `blobstorage` is
 located.
+
+    bika_plone_backup_path: /home/{{ bika_user }}/backup
+
+The `backup` directory to use.
+
+    bika_plone_backup_at:
+      minute: 30
+      hour: 2
+      weekday: "*"
+
+When do you wish to run the backup operation? Specify minute, hour and weekday specifications for a valid *cron* time. See `CRONTAB(5)`. Defaults to 2:30 every morning.  Set to `no` to avoid creation of a cron job.
+
+    bika_plone_keep_backups: 5
+
+How many generations of full backups do you wish to keep? Defaults to `5`.
 
     bika_plone_client_count: 2
 

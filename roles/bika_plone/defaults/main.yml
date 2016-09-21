@@ -9,8 +9,9 @@ bika_plone_initial_password: bika
 bika_plone_instance_name: bikalims
 bika_plone_site_id: bikalims
 bika_plone_create_site: yes
-bika_plone_target_path: /home/{{ bika_user }}
-bika_plone_var_path: /home/{{ bika_user }}/data
+bika_plone_target_path: "/home/{{ bika_user }}"
+bika_plone_var_path: "/home/{{ bika_user }}/data"
+bika_plone_backup_path: "{{ bika_plone_var_path }}"
 bika_plone_additional_eggs:
   - bika.lims
   - bika.health
@@ -31,6 +32,13 @@ bika_supervisor_http_port: "127.0.0.1:9001"
 bika_supervisor_http_user: "admin"
 bika_supervisor_http_pass: "admin"
 
+# Backup
+bika_plone_backup_at:
+  minute: 30
+  hour: 2
+  weekday: "*"
+
+bika_plone_keep_backups: 5
 
 # This configuration gets passed to the `plone_server` role, see
 # `meta/main.yml`.
@@ -45,6 +53,9 @@ bika_plone_config:
     plone_create_site: "{{ bika_plone_create_site }}"
     plone_target_path: "{{ bika_plone_target_path }}"
     plone_var_path: "{{ bika_plone_var_path }}"
+    plone_backup_path: "{{ bika_plone_backup_path }}"
+    plone_backup_at: "{{ bika_plone_backup_at }}"
+    plone_keep_backups: "{{ bika_plone_keep_backups }}"
     plone_additional_eggs: "{{ bika_plone_additional_eggs }}"
     plone_additional_versions: "{{ bika_plone_additional_versions }}"
     plone_extension_profiles: "{{ bika_plone_extension_profiles }}"
