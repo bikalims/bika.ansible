@@ -14,10 +14,8 @@ bika_plone_var_path: "/home/{{ bika_user }}/data"
 bika_plone_backup_path: "{{ bika_plone_var_path }}"
 bika_plone_additional_eggs:
   - bika.lims
-  - bika.health
 bika_plone_additional_versions:
-  - bika.lims=3.1.9
-  - bika.health=3.1.8
+  - bika.lims=3.1.11
 bika_plone_extension_profiles: []
 bika_plone_client_count: 2
 bika_plone_zserver_threads: 2
