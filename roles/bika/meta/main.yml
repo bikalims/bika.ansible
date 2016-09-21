@@ -7,18 +7,30 @@ dependencies:
 
     # BIKA BASE
   - role: bika_base
+    tags:
+      - bika-base
 
     # BIKA PLONE
   - role: bika_plone
+    tags:
+      - bika-plone
 
     # BIKA HAPROXY
   - role: bika_haproxy
+    tags:
+      - bika-haproxy
 
     # BIKA VARNISH
   - role: bika_varnish
+    tags:
+      - bika-varnish
 
     # BIKA NGINX
   - role: bika_nginx
+    tags:
+      - bika-nginx
 
     # BIKA SECURITY
   - role: bika_security
+    tags:
+      - bika-security

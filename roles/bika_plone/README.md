@@ -104,14 +104,12 @@ Set to `yes` to create a Plone site automatially.
 
     bika_plone_additional_eggs:
       - bika.lims
-      - bika.health
 
 List additional Python packages (beyond Plone and the Python Imaging Library)
 that you want available in the Python package environment.
 
     bika_plone_additional_versions:
-      - bika.lims=3.1.9
-      - bika.health=3.1.8
+      - bika.lims=3.1.11
 
 The version pins you specify here will be added to the [versions] section of
 your Bika buildout.
