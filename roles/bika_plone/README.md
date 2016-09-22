@@ -33,6 +33,7 @@ Available variables are listed below, along with default values (see
         plone_backup_path: "{{ bika_plone_backup_path }}"
         plone_backup_at: "{{ bika_plone_backup_at }}"
         plone_additional_eggs: "{{ bika_additional_eggs }}"
+        plone_zcml_slugs: "{{ bika_plone_zcml_slugs + bika_monitoring_zcml }}"
         plone_additional_versions: "{{ bika_additional_versions }}"
         plone_client_count: "{{ bika_plone_client_count }}"
         plone_zserver_threads: "{{ bika_plone_zserver_threads }}"
@@ -107,6 +108,12 @@ Set to `yes` to create a Plone site automatially.
 
 List additional Python packages (beyond Plone and the Python Imaging Library)
 that you want available in the Python package environment.
+
+    bika_plone_zcml_slugs:
+        - plone.reload
+
+List additional ZCML slugs that may be required by older packages that don't
+implement auto-discovery. The default list is empty. This is rarely needed.
 
     bika_plone_additional_versions:
       - bika.lims=3.1.11
