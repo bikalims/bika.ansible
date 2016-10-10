@@ -40,6 +40,8 @@ Available variables are listed below, along with default values (see
         plone_zeo_ip: "{{ bika_plone_zeo_ip }}"
         plone_zeo_port: "{{ bika_plone_zeo_port }}"
         plone_client_base_port: "{{ bika_plone_client_base_port }}"
+        plone_buildout_extra: "{{ bika_plone_buildout_extra }}"
+        plone_sources: "{{ bika_plone_sources }}"
 
 Bika specific configuration for [Plone][2].
 
@@ -51,10 +53,8 @@ You can overwrite this variable to your needs using the variables defined in the
         plone_initial_password: admin
         plone_additional_eggs:
           - bika.lims
-          - bika.health
         plone_additional_versions:
-          - bika.lims=3.1.9
-          - bika.health=3.1.8
+          - bika.lims=3.1.11
 
 Please note, that there is only **one** item supported below `bika_plone_config`
 (Note the `-` below the variable).
@@ -177,6 +177,25 @@ Defines the objects to keep in the ZODB cache.
 
 Note: A higher value consumes more RAM
 
+    bika_plone_buildout_extra: |
+      allow-picked-versions = false
+      socket-timeout = 5
+
+Allows you to add settings to the automatically generated buildout. Any text
+specified this way is inserted at the end of the ``[buildout]`` part and before
+any of the other parts. Defaults to empty.
+
+    bika_plone_sources =
+      -  "my.package = svn http://example.com/svn/my.package/trunk update=true"
+      -  "some.other.package = git git://example.com/git/some.other.package.git rev=1.1.5"
+
+This setting allows you to check out and include repository-based sources in
+your buildout.
+
+Source specifications, a list of strings
+in [mr.developer](https://pypi.python.org/pypi/mr.developer) sources format. If
+you specify plone_sources, the mr.developer extension will be used with
+auto-checkout set to "*".
 
 ## Supervisor HTTP
 
