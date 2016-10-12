@@ -1,1 +1,27 @@
 ---
+
+- name: update configuration file
+  template:
+    src: etc/postfix/main.cf.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart postfix
+  tags:
+    bika-postfix-configure
+
+- name: "Configure Postfix `smtp_generic_maps` in /etc/postfix/generic"
+  lineinfile:
+    dest: /etc/postfix/generic
+    regexp: '^{{ item.user }}.*'
+    line: '{{ item.user }} {{ item.alias }}'
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ bika_postfix_smtp_generic_maps }}"
+  notify:
+    - postmap generic_maps
+    - restart postfix
+  tags:
+    bika-postfix-configure

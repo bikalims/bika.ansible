@@ -13,14 +13,11 @@ Please use the variables from the [Ansible Postfix Role][8].
 This role uses some defaults of these variables that listed below, along with
 default values (see `vars/main.yml`):
 
-    postfix_inet_interfaces: loopback-only
-    postfix_aliases:
-      - { user: root, alias: root@locahost }
-    postfix_relaytls: true
-    postfix_relayhost:
-    postfix_sasl_user: "postmaster@{{ ansible_domain }}"
-    postfix_sasl_password: 'k8+haga4@#pR'
+    bika_postfix_smtp_generic_maps:
+      - { user: root, alias: root@example.com }
 
+Specify a lookup tables to perform address rewriting in the Postfix
+see: http://www.postfix.org/postconf.5.html#smtp_generic_maps
 
 [1]:  https://github.com/bikalabs/bika.lims/wiki "Bika LIMS"
 [2]:  https://www.vagrantup.com/docs/getting-started/ "Vagrant"

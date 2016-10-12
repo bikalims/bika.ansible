@@ -1,0 +1,5 @@
+# handlers file for postfix
+---
+
+- name: postmap generic_maps
+  command: postmap hash:/etc/postfix/generic
