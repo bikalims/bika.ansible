@@ -4,9 +4,6 @@
   set_fact:
     bika_config: "{{ bika_plone_config[0] }}"
 
-- debug:
-    msg: "BIKA Config={{bika_config}}"
-
 - name: Insert Supervisor HTTP Server Block
   blockinfile:
     dest: /etc/supervisor/supervisord.conf
@@ -34,3 +31,16 @@
   notify: restart supervisor
   tags:
     - bika-supervisor
+
+- name: Insert ZEO Monitoring Block
+  blockinfile:
+    dest: "{{bika_plone_target_path}}/{{bika_plone_instance_name}}/parts/zeoserver/etc/zeo.conf"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    block: |
+      monitor-address {{bika_plone_zeo_ip}}:{{bika_zeo_monitor_port}}
+    state: present
+    insertbefore: "</zeo>"
+  notify: restart supervisor
+  tags:
+    - munin-znagios
+    - bika-monitoring

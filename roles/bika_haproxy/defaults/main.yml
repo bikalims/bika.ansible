@@ -6,6 +6,8 @@ bika_haproxy_stats_user: admin
 bika_haproxy_stats_pass: admin
 bika_haproxy_frontend_bind_address: "127.0.0.1"
 bika_haproxy_frontend_port: "8080"
+bika_haproxy_frontend_id: bika_frontend
+bika_haproxy_backend_id: bika_backend
 
 # Backend settings.
 bika_haproxy_backend_balance_method: 'leastconn'

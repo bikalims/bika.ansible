@@ -1,0 +1,11 @@
+# BIKA Munin hosts.
+{% for host in bika_munin_hosts %}
+[{{ host.name }}]
+    address {{ host.address }}
+{% if host.extra is defined %}
+{% for extra in host.extra %}
+    {{ extra }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
