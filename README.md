@@ -51,6 +51,7 @@ This repository contains a running [Vagrant][10] setup, which creates a full
 - Bika Varnish (Cache Proxy)
 - Bika NGINX (Webserver)
 - Bika Munin (Monitoring)
+- Bika Postfix (Mail)
 
 ### Vagrant Setup
 
@@ -85,6 +86,8 @@ This role depends on the following Ansible Roles:
 - [Varnish](https://galaxy.ansible.com/geerlingguy/varnish)
 - [NGINX](https://galaxy.ansible.com/geerlingguy/nginx)
 - [Firewall](https://galaxy.ansible.com/HanXHX/firewall)
+- [Munin](https://galaxy.ansible.com/geerlingguy/munin)
+- [Munin](https://galaxy.ansible.com/tersmitten/postfix)
 
 
 
