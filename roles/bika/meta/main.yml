@@ -39,3 +39,8 @@ dependencies:
   - role: bika_munin
     tags:
       - bika-munin
+
+    # BIKA POSTFIX
+  - role: bika_postfix
+    tags:
+      - bika-postfix
