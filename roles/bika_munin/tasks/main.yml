@@ -114,7 +114,7 @@
 
 - name: Activate (Symlink) ZNagios ZEO Plugins
   when: znagios_zeo_plugin.stat.exists
-  shell: 'for p in {zeo_loadstores_ZEO_1,zeo_clients_ZEO_1};do ln -sf {{znagios_zeo_plugin.stat.path}} $p; done'
+  shell: 'for p in {zeo_loadstores_ZEO1_1,zeo_clients_ZEO1_1};do ln -sf {{znagios_zeo_plugin.stat.path}} $p; done'
   args:
     chdir: /etc/munin/plugins
     executable: /bin/bash

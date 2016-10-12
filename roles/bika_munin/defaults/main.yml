@@ -64,8 +64,8 @@ bika_munin_plugin_conf: |
 
   [zeo_*]
   user root
-  env.MUNIN_ZEO_HOST_ZEO {{bika_plone_zeo_ip}}
-  env.MUNIN_ZEO_PORT_ZEO {{bika_zeo_monitor_port}}
+  env.MUNIN_ZEO_HOST_ZEO1 {{bika_plone_zeo_ip}}
+  env.MUNIN_ZEO_PORT_ZEO1 {{bika_zeo_monitor_port}}
 
 bika_znagios_egg: '{{bika_plone_target_path}}/buildout-cache/eggs/Products.ZNagios-*.egg'
 
