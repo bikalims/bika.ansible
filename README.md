@@ -28,6 +28,27 @@ Create an [Ansible Playbook][9], e.g. name it `bika.yml`:
       roles:
         - role: bika
 
+Note: The `bika` role does a **full monty** installation.
+
+If you want to selectively choose which parts you want to install, use a configuration like this:
+
+    ---
+    - hosts: all
+      become: yes
+      gather_facts: yes
+      pre_tasks:
+        - name: Update APT package cache
+          action: apt update_cache=yes
+      roles:
+        - role: bika_base
+        - role: bika_plone
+        - role: bika_haproxy
+        - role: bika_varnish
+        - role: bika_nginx
+        - role: bika_security
+        - role: bika_munin
+        - role: bika_postfix
+
 Create an [Ansible Inventory][8] file, e.g. name it `bika_hosts.cfg`:
 
     [bika]
@@ -50,6 +71,7 @@ This repository contains a running [Vagrant][10] setup, which creates a full
 - Bika HAProxy (Load Balancer)
 - Bika Varnish (Cache Proxy)
 - Bika NGINX (Webserver)
+- Bika Security (Firewall/Fail2Ban)
 - Bika Munin (Monitoring)
 - Bika Postfix (Mail)
 
@@ -87,8 +109,7 @@ This role depends on the following Ansible Roles:
 - [NGINX](https://galaxy.ansible.com/geerlingguy/nginx)
 - [Firewall](https://galaxy.ansible.com/HanXHX/firewall)
 - [Munin](https://galaxy.ansible.com/geerlingguy/munin)
-- [Munin](https://galaxy.ansible.com/tersmitten/postfix)
-
+- [Postfix](https://galaxy.ansible.com/tersmitten/postfix)
 
 
 [1]: https://github.com/bikalabs/bika.lims/wiki "Bika LIMS"

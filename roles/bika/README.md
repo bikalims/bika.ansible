@@ -8,6 +8,9 @@ following components:
 - Bika HAProxy (Load Balancer)
 - Bika Varnish (Cache Proxy)
 - Bika NGINX (Webserver)
+- Bika Security (Firewall/Fail2Ban)
+- Bika Munin (Monitoring)
+- Bika Postfix (Mail)
 
 > **Note:**
 > Ansible Version > 2 is required
@@ -20,6 +23,9 @@ This role depends on the follwoing Ansible Roles:
 - [HAProxy](https://galaxy.ansible.com/geerlingguy/haproxy)
 - [Varnish](https://galaxy.ansible.com/geerlingguy/varnish)
 - [NGINX](https://galaxy.ansible.com/geerlingguy/nginx)
+- [Firewall](https://galaxy.ansible.com/HanXHX/firewall)
+- [Munin](https://galaxy.ansible.com/geerlingguy/munin)
+- [Postfix](https://galaxy.ansible.com/tersmitten/postfix)
 
 ## Installation
 
@@ -34,7 +40,7 @@ in this repository), which will use the local `roles` folder.
 ## Playbook
 
 Within a [Playbook](http://docs.ansible.com/ansible/playbooks.html) you just
-need to include this role for a full monty installation.
+need to include this role for a **full monty** installation.
 
     ---
     - hosts: bika
