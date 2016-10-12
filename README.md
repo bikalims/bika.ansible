@@ -50,6 +50,7 @@ This repository contains a running [Vagrant][10] setup, which creates a full
 - Bika HAProxy (Load Balancer)
 - Bika Varnish (Cache Proxy)
 - Bika NGINX (Webserver)
+- Bika Munin (Monitoring)
 
 ### Vagrant Setup
 
@@ -72,7 +73,7 @@ As soon as the machine is running, you can start the provisioning process:
 > and uncomment the line with the correct private_key file path, or ansible
 > will not be able to connect.
 
-Open a browser and navigate to: http://192.168.33.10
+Open a browser and navigate to: http://192.168.33.10/bika_control_panel
 
 
 ## Dependencies
