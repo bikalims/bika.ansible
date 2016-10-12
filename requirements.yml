@@ -16,3 +16,5 @@
 - src: geerlingguy.haproxy
 
 - src: HanXHX.firewall
+
+- src: geerlingguy.munin

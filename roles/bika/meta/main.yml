@@ -34,3 +34,8 @@ dependencies:
   - role: bika_security
     tags:
       - bika-security
+
+    # BIKA MUNIN
+  - role: bika_munin
+    tags:
+      - bika-munin

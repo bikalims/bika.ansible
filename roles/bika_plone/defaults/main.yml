@@ -45,14 +45,11 @@ bika_plone_keep_backups: 5
 # Bika Monitoring: Defined in an extras section to be independent if someone
 # overwrites `bika_plone_additional_eggs`
 bika_monitoring_eggs:
-  - collective.monitor
-bika_monitoring_zcml:
-  - collective.monitor
-bika_monitoring_extras: |
-  zope-conf-additional =
-    <product-config five.z2monitor>
-      bind 127.0.0.1:8999
-    </product-config>
+  - Products.ZNagios
+bika_monitoring_zcml: []
+bika_monitoring_versions:
+  - Products.ZNagios=0.7.2
+bika_zeo_monitor_port: 8999
 
 # This configuration gets passed to the `plone_server` role, see
 # `meta/main.yml`.
@@ -72,9 +69,9 @@ bika_plone_config:
     plone_keep_backups: "{{ bika_plone_keep_backups }}"
     plone_additional_eggs: "{{ bika_plone_additional_eggs + bika_monitoring_eggs }}"
     plone_zcml_slugs: "{{ bika_plone_zcml_slugs + bika_monitoring_zcml }}"
-    plone_additional_versions: "{{ bika_plone_additional_versions }}"
+    plone_additional_versions: "{{ bika_plone_additional_versions + bika_monitoring_versions }}"
     plone_extension_profiles: "{{ bika_plone_extension_profiles }}"
-    plone_client_extras: "{{ bika_plone_client_extras }}\n{{ bika_monitoring_extras }}"
+    plone_client_extras: "{{ bika_plone_client_extras }}"
     plone_client_count: "{{ bika_plone_client_count }}"
     plone_zserver_threads: "{{ bika_plone_zserver_threads }}"
     plone_zeo_port: "{{ bika_plone_zeo_port }}"

@@ -1,0 +1,8 @@
+---
+
+dependencies:
+  - role: geerlingguy.munin
+  - role: bika_nginx
+  - role: bika_haproxy
+  - role: bika_varnish
+  - role: bika_plone

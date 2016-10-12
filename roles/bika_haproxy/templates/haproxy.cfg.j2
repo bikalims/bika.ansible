@@ -2,7 +2,7 @@
 global
   log /dev/log  local0
   log /dev/log  local1 notice
-  stats socket /var/lib/haproxy/stats level admin
+  stats socket /var/lib/haproxy/stats mode 600 level admin
   chroot /var/lib/haproxy
   user haproxy
   group haproxy
@@ -64,11 +64,11 @@ defaults
   errorfile 504 /etc/haproxy/errors/504.http
 {% endif %}
 
-frontend bika_frontend
+frontend {{ bika_haproxy_frontend_id }}
     bind {{ bika_haproxy_frontend_bind_address }}:{{ bika_haproxy_frontend_port }}
-    default_backend bika_backend
+    default_backend {{ bika_haproxy_backend_id }}
 
-backend bika_backend
+backend {{ bika_haproxy_backend_id }}
 
     # Use Zope's __ac cookie as a basis for session stickiness if present.
     appsession __ac len 32 timeout 1d
