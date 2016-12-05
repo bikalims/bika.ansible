@@ -1,5 +1,9 @@
 vcl 4.0;
 
+# Uncomment to use Logging, e.g: std.log("Log Message");
+# Show logs on the Server: $ varnishlog | grep VCL_Log
+# import std;
+
 # This is a BIKA VCL configuration file for varnish.
 # http://docs.plone.org/manage/deploying/caching/varnish4.html
 backend default {
@@ -33,6 +37,8 @@ sub vcl_recv {
     if (req.http.Cookie) {
         set req.http.Cookie = ";" + req.http.Cookie;
         set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+        # Keep graphite.theme specific cookie
+        set req.http.Cookie = regsuball(req.http.Cookie, "; bika.graphite.disabled=", "; bika.graphite.disabled=\1");
         set req.http.Cookie = regsuball(req.http.Cookie, ";(statusmessages|__ac|_ZopeId|__cp)=", "; \1=");
         set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
         set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
