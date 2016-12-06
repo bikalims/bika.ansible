@@ -31,6 +31,12 @@ sub vcl_recv {
         return (purge);
     }
 
+    # FIXIT: No caching if Graphite Theme is installed,
+    # Otherwise the Theme activation/deactivation does not work
+    if (req.http.Cookie ~ "bika.graphite.theme") {
+        return (pass);
+    }
+
     #
     # Do Plone cookie sanitization, so cookies do not destroy cacheable anonymous pages
     #
