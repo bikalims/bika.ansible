@@ -33,7 +33,7 @@ sub vcl_recv {
 
     # FIXIT: No caching if Graphite Theme is installed,
     # Otherwise the Theme activation/deactivation does not work
-    if (req.http.Cookie ~ "bika.graphite.theme") {
+    if (req.http.Cookie ~ "bika.graphite.disabled") {
         return (pass);
     }
 
