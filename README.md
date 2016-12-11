@@ -75,6 +75,39 @@ This repository contains a running [Vagrant][10] setup, which creates a full
 - Bika Munin (Monitoring)
 - Bika Postfix (Mail)
 
+### Vagrant Prerequisites
+
+Please ensure you have a recent version of [Vagrant][10] installed on your machine:
+
+    vagrant version
+    Installed Version: 1.9.1
+    Latest Version: 1.9.1
+
+    To upgrade to the latest version, visit the downloads page and
+    download and install the latest version of Vagrant from the URL
+    below:
+
+      http://www.vagrantup.com/downloads.html
+
+    If you're curious what changed in the latest release, view the
+    CHANGELOG below:
+
+      https://github.com/mitchellh/vagrant/blob/v1.9.1/CHANGELOG.md
+
+### Vagrant Commands
+
+List available [Vagrant][10] commands:
+
+    vagrant list-commands
+
+List downloaded boxes:
+
+    vagrant box list
+    [...]
+    trusty64        (virtualbox, 0)
+    ubuntu/xenial64 (virtualbox, 20161209.0.0)
+
+
 ### Vagrant Setup
 
 Start the [Vagrant][10] machine:
@@ -98,6 +131,13 @@ As soon as the machine is running, you can start the provisioning process:
 
 Open a browser and navigate to: http://192.168.33.10/bika_control_panel
 
+Stop the [Vagrant][10] machine:
+
+    vagrant halt
+
+Destroy the [Vagrant][10] machine:
+
+    vagrant destroy
 
 ## Dependencies
 
