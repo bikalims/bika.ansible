@@ -39,6 +39,14 @@
   tags:
     - bika-base
 
+- name: Install additional system packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ bika_additional_system_packages }}"
+  tags:
+    - bika-base
+
 - name: Adjust APT update intervals
   template:
     src: 10periodic.j2

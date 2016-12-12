@@ -20,6 +20,10 @@ None
 Available variables are listed below, along with default values (see
 `defaults/main.yml`):
 
+    bika_additional_system_packages: []
+
+List any additional system packages to get installed via `apt`.
+
     bika_apt_update_package_lists: 1
 
 Frequency (in days) at which the package lists are refreshed

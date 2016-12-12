@@ -1,5 +1,8 @@
 ---
 
+# APT additional packages to install
+bika_additional_system_packages: []
+
 # APT update intervals (`/etc/apt/apt.conf.d/10periodic`)
 bika_apt_update_package_lists: 1
 bika_apt_download_upgradable_packages: 1
