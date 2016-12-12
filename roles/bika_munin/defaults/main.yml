@@ -75,6 +75,10 @@ bika_munin_plugins:
     dest: /etc/munin/plugins/nginx_request
   - src: /usr/share/munin/plugins/nginx_status
     dest: /etc/munin/plugins/nginx_status
+  - src: /etc/munin/contrib/plugins/nginx/nginx_error
+    dest: /etc/munin/plugins/nginx_error
+  - src: /etc/munin/contrib/plugins/nginx/nginx_memory
+    dest: /etc/munin/plugins/nginx_memory
   # HAPROXY
   - src: /usr/share/munin/plugins/haproxy_ng
     dest: /etc/munin/plugins/haproxy_ng
