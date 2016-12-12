@@ -1,4 +1,9 @@
 # BIKA HAPROXY Configuration
+#
+# HAProxy configurations changed for versions greater 1.6.x.
+#
+# Use this command to check the config:
+# $ haproxy -f /etc/haproxy/haproxy.cfg -c
 global
   log /dev/log  local0
   log /dev/log  local1 notice
@@ -70,8 +75,17 @@ frontend {{ bika_haproxy_frontend_id }}
 
 backend {{ bika_haproxy_backend_id }}
 
+    # As of version 1.6, appsessions was removed. It is more flexible and more
+    # convenient to use stick-tables instead, and stick-tables support multi-master
+    # replication and data conservation across reloads, which appsessions did not.
+    #
     # Use Zope's __ac cookie as a basis for session stickiness if present.
-    appsession __ac len 32 timeout 120m
+    # appsession __ac len 32 timeout 120m
+    #
+    # https://cbonte.github.io/haproxy-dconv/1.6/configuration.html#4-stick-table
+    stick-table type string len 32 size 1m expire 120m
+    stick store-response res.cook(__ac)
+    stick match req.cook(__ac)
 
     # Otherwise add a cookie called "serverid" for maintaining session stickiness.
     # This cookie lasts until the client's browser closes, and is invisible to Zope.

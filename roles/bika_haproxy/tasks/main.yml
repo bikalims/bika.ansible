@@ -1,9 +1,34 @@
 ---
 
-- name: Copy Bika HAProxy
+- name: SHELL | Get HAPROXY Version
+  shell: haproxy -v | grep -o "[0-9]\.[0-9]"
+  register: haproxy_version
+  tags: bika-haproxy-version
+
+- debug:
+    msg: "HAProxy Version is < 1.6 -> {{ haproxy_version.stdout }}"
+  when: haproxy_version.stdout < 1.6
+  tags: bika-haproxy-version
+
+- debug:
+    msg: "HAProxy Version is > 1.6 -> {{ haproxy_version.stdout }}"
+  tags: bika-haproxy-version
+  when: haproxy_version.stdout >= 1.6
+
+- name: Copy Bika HAProxy for versions < 1.6
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     mode: 0644
   notify: restart haproxy
+  when: haproxy_version.stdout < 1.6
+  tags: bika-haproxy
+
+- name: Copy Bika HAProxy for versions >= 1.6
+  template:
+    src: haproxy-1.6.x.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+  notify: restart haproxy
+  when: haproxy_version.stdout >= 1.6
   tags: bika-haproxy
