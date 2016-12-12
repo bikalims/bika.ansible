@@ -38,7 +38,6 @@
     - src: hosts.conf.j2
       dest: "{{ munin_conf_d_directory }}/hosts.conf"
   notify:
-    - restart munin
     - restart munin-node
 
 - name: Clone Munin Contribution Repository
@@ -74,7 +73,6 @@
     group: root
   with_items: "{{ bika_munin_plugins }}"
   notify:
-    - restart munin
     - restart munin-node
 
 # https://pypi.python.org/pypi/Products.ZNagios
@@ -107,7 +105,6 @@
     executable: /bin/bash
   with_sequence: count="{{ bika_plone_client_count }}"
   notify:
-    - restart munin
     - restart munin-node
   tags:
     - munin-znagios
@@ -119,7 +116,6 @@
     chdir: /etc/munin/plugins
     executable: /bin/bash
   notify:
-    - restart munin
     - restart munin-node
   tags:
     - munin-znagios
@@ -131,7 +127,6 @@
     state: touch
     mode: 0755
   notify:
-    - restart munin
     - restart munin-node
   tags:
     - munin-znagios
@@ -143,7 +138,6 @@
     state: touch
     mode: 0755
   notify:
-    - restart munin
     - restart munin-node
   tags:
     - munin-znagios
