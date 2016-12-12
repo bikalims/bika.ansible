@@ -10,16 +10,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  # config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
   # Application Server
   config.vm.define "app" do |app|
     app.vm.hostname = "bika"
-    app.vm.box = "trusty64"
+    app.vm.box = "ubuntu/xenial64"
     app.vm.network :private_network, ip: "192.168.33.10"
   end
 
