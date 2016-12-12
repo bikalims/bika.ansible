@@ -1,7 +1,23 @@
-# Bika Administrative VHOST
+# Redirect per default to HTTPS
 server {
+    server_name _;
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
+    return 301 https://$host$request_uri;
+}
+
+# Bika Administrative HTTPS VHOST
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server ipv6only=on;
+
+    ssl_certificate {{ bika_ssl_certificate }};
+    ssl_certificate_key {{ bika_ssl_certificate_key }};
+
+    ssl_session_timeout 10m;
+    ssl_protocols SSLv3 TLSv1;
+    ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+    ssl_prefer_server_ciphers on;
 
     root {{ bika_nginx_html_root }};
 
