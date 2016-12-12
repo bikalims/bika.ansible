@@ -103,3 +103,10 @@ bika_munin_plugins:
     dest: /etc/munin/plugins/varnish4_transfer_rates
   - src: /etc/munin/contrib/plugins/varnish4/varnish4_
     dest: /etc/munin/plugins/varnish4_uptime
+  # POSTFIX PLUGINS
+  - src: /usr/share/munin/plugins/postfix_mailqueue
+    dest: /etc/munin/plugins/postfix_mailqueue
+  - src: /usr/share/munin/plugins/postfix_mailstats
+    dest: /etc/munin/plugins/postfix_mailstats
+  - src: /usr/share/munin/plugins/postfix_mailvolume
+    dest: /etc/munin/plugins/postfix_mailvolume
