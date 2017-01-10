@@ -20,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "app" do |app|
     app.vm.hostname = "bika"
     app.vm.box = "ubuntu/xenial64"
+    app.vm.provision "shell", inline: "apt-get install -y python aptitude"
     app.vm.network :private_network, ip: "192.168.33.10"
   end
 

@@ -152,6 +152,24 @@ This role depends on the following Ansible Roles:
 - [Postfix](https://galaxy.ansible.com/tersmitten/postfix)
 
 
+## Troubleshooting
+
+Problem:
+
+The `plone_server` role is complaining about initial password not being set.
+
+Solutions:
+
+- Please ensure that your variables (where `bika_plone_initial_password` is
+  set) are included in a `pre_task` of your playbook. See `vagrant.yml` and
+  `vagrant_configure.yml` for details.
+
+- Please ensure that your config is valid. E.g. the version pinning
+  `bika_plone_additional_versions` is a list, so if you want to define no
+  versions, add an empty list `[]` as its value.
+
+- Please ensure you actually have an initial password set.
+
 [1]: https://github.com/bikalabs/bika.lims/wiki "Bika LIMS"
 [2]: https://plone.org "Plone"
 [3]: https://galaxy.ansible.com "Ansible Galaxy"

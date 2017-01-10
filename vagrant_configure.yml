@@ -1,14 +1,20 @@
 ---
 
 # Bika Plone
+bika_plone_version: "4.3.11"
 bika_plone_additional_eggs:
   - bika.lims
+  - graphite.theme
+  - Products.PloneHotfix20161129
 bika_plone_additional_versions:
-  - bika.lims=3.1.11
-bika_plone_extension_profiles:
-  - bika.lims:default
+   - CairoSVG=1.0.20
+bika_plone_extension_profiles: []
 bika_plone_client_count: 2
 bika_plone_initial_password: admin
+bika_plone_zcml_slugs: []
+bika_plone_sources:
+  - "bika.lims = git git@github.com:ridingbytes/bika.lims.git"
+  - "graphite.theme = git git@github.com:ridingbytes/graphite.theme.git"
 
 # Supervisor HTTP UI
 bika_supervisor_with_http: yes
@@ -36,5 +42,29 @@ bika_ssl_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
 bika_ssl_certificate_key: /etc/ssl/private/ssl-cert-snakeoil.key
 
 # Security Settings
-bika_firewall_open_tcp_ports: [80, 443]
+bika_firewall_open_tcp_ports: [25, 80, 443]
 bika_firewall_use_fail2ban: yes
+
+# Munin
+bika_nginx_config_path: /etc/nginx/sites-available/bika.conf
+bika_munin_hostname: "bikalims"
+bika_munin_admin_password: admin
+bika_munin_hosts:
+  - {
+    name: "BIKA;{{ bika_munin_hostname }}",
+    address: "127.0.0.1",
+    extra: ["use_node_name yes"]
+  }
+munin_alerts:
+  - {
+    name: "MYNAME",
+    email: "me@example.com",
+    subject: "Munin-notification for ${var:group} :: ${var:host}",
+    level: "warning critical"
+  }
+
+# POSTFIX
+postfix_inet_interfaces: loopback-only
+postfix_relayhost: "{{ ansible_lo['ipv4']['address'] }}"
+postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
