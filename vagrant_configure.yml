@@ -13,8 +13,8 @@ bika_plone_client_count: 2
 bika_plone_initial_password: admin
 bika_plone_zcml_slugs: []
 bika_plone_sources:
-  - "bika.lims = git git@github.com:ridingbytes/bika.lims.git"
-  - "graphite.theme = git git@github.com:ridingbytes/graphite.theme.git"
+  - "bika.lims = git https://github.com/bikalabs/bika.lims.git"
+  - "graphite.theme = git https://github.com/naralabs/graphite.theme.git"
 
 # Supervisor HTTP UI
 bika_supervisor_with_http: yes
