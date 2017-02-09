@@ -28,6 +28,7 @@ bika_plone_zeo_port: 8100
 bika_plone_client_base_port: 8081
 bika_plone_zodb_cache_size: 30000
 bika_plone_buildout_extra:
+bika_plone_buildout_extra_parts:
 bika_plone_sources:
 
 # Supervisor Daemon HTTP
@@ -92,4 +93,5 @@ bika_plone_config:
     plone_client_base_port: "{{ bika_plone_client_base_port }}"
     plone_zodb_cache_size: "{{ bika_plone_zodb_cache_size }}"
     plone_buildout_extra: "{{ bika_plone_buildout_extra }}"
+    plone_buildout_extra_parts: "{{ bika_plone_buildout_extra_parts }}"
     plone_sources: "{{ bika_plone_sources }}"
