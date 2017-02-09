@@ -190,11 +190,6 @@ When do you wish to run the backup operation? Specify minute, hour and weekday
 specifications for a valid *cron* time. See `CRONTAB(5)`. Defaults to 2:30 every
 morning. Set to `no` to avoid creation of a cron job.
 
-NOTE: The `backup` and `pack` cronjobs are added for the `bika_daemon` user. To
-      see them, you have to type `sudo crontab -u bika_daemon -l`. Please ensure
-      that the `bika_plone_backup_path` is accessible for this user, otherwise
-      this won't work.
-
     bika_plone_keep_backups: 5
 
 How many generations of full backups do you wish to keep? Defaults to `5`.
