@@ -32,6 +32,11 @@ Available variables are listed below, along with default values (see
         plone_var_path: "{{ bika_plone_var_path }}"
         plone_backup_path: "{{ bika_plone_backup_path }}"
         plone_backup_at: "{{ bika_plone_backup_at }}"
+        plone_keep_backups: "{{ bika_plone_keep_backups }}"
+        plone_keep_blob_days: "{{ bika_plone_keep_blob_days }}"
+        plone_pack_at:  "{{ bika_plone_pack_at }}"
+        plone_keep_days: "{{ bika_plone_keep_days }}"
+        plone_rsync_backup_options:  "{{ bika_plone_rsync_backup_options }}"
         plone_additional_eggs: "{{ bika_additional_eggs }}"
         plone_zcml_slugs: "{{ bika_plone_zcml_slugs + bika_monitoring_zcml }}"
         plone_additional_versions: "{{ bika_additional_versions }}"
@@ -49,12 +54,12 @@ You can overwrite this variable to your needs using the variables defined in the
 [Plone Server Role][4], for example like this:
 
     bika_plone_config:
-      - plone_version: "4.3.8"
+      - plone_version: "4.3.11"
         plone_initial_password: admin
         plone_additional_eggs:
           - bika.lims
         plone_additional_versions:
-          - bika.lims=3.1.11
+          - bika.lims=3.1.13
 
 Please note, that there is only **one** item supported below `bika_plone_config`
 (Note the `-` below the variable).
@@ -68,6 +73,9 @@ settings within the [Plone Server Role][4].
 Note: Besides the `bika_user` variable, all listed variables are proxies of the
       defined variables within the [Plone Server Role][4] prefixed with `bika_`.
 
+
+### System Users
+
     bika_user: bika
 
 The user which "owns" the buildout and where everything gets installed.
@@ -80,7 +88,10 @@ The default group `bika_user` belongs to.
 
 The user who runs the process of the server.
 
-    bika_plone_version: "4.3.8"
+
+### Bika LIMS
+
+    bika_plone_version: "4.3.11"
 
 The [Plone][2] version to be used – Bika currently only the 4.x series.
 
@@ -109,22 +120,45 @@ Set to `yes` to create a Plone site automatially.
 List additional Python packages (beyond Plone and the Python Imaging Library)
 that you want available in the Python package environment.
 
+    bika_plone_additional_versions:
+      - bika.lims=3.1.13
+
+The version pins you specify here will be added to the [versions] section of
+your Bika buildout.
+
     bika_plone_zcml_slugs:
         - plone.reload
 
 List additional ZCML slugs that may be required by older packages that don't
 implement auto-discovery. The default list is empty. This is rarely needed.
 
-    bika_plone_additional_versions:
-      - bika.lims=3.1.11
-
-The version pins you specify here will be added to the [versions] section of
-your Bika buildout.
-
     bika_plone_extension_profiles: []
 
 List additional Plone profiles which should be activated in the new Plone site.
 These are only activated if the `bika_plone_create_site` is set.
+
+    bika_plone_buildout_extra: |
+      allow-picked-versions = false
+      socket-timeout = 5
+
+Allows you to add settings to the automatically generated buildout. Any text
+specified this way is inserted at the end of the ``[buildout]`` part and before
+any of the other parts. Defaults to empty.
+
+    bika_plone_sources =
+      -  "my.package = svn http://example.com/svn/my.package/trunk update=true"
+      -  "some.other.package = git git://example.com/git/some.other.package.git rev=1.1.5"
+
+This setting allows you to check out and include repository-based sources in
+your buildout.
+
+Source specifications, a list of strings
+in [mr.developer](https://pypi.python.org/pypi/mr.developer) sources format. If
+you specify plone_sources, the mr.developer extension will be used with
+auto-checkout set to "*".
+
+
+### Installation Paths
 
     bika_plone_target_path: /home/{{ bika_user }}
 
@@ -135,6 +169,14 @@ Sets the Bika installation directory.
 The `var` directory to use. This is where the `filestorage` and `blobstorage` is
 located.
 
+
+### Backups
+
+The following `backup` and `pack` cronjobs are added for the `bika_daemon` user.
+To see them, you have to type `sudo crontab -u bika_daemon -l`. Please ensure
+that the `bika_plone_backup_path` is accessible for this user, otherwise this
+won't work.
+
     bika_plone_backup_path: /home/{{ bika_user }}/backup
 
 The `backup` directory to use.
@@ -144,11 +186,39 @@ The `backup` directory to use.
       hour: 2
       weekday: "*"
 
-When do you wish to run the backup operation? Specify minute, hour and weekday specifications for a valid *cron* time. See `CRONTAB(5)`. Defaults to 2:30 every morning.  Set to `no` to avoid creation of a cron job.
+When do you wish to run the backup operation? Specify minute, hour and weekday
+specifications for a valid *cron* time. See `CRONTAB(5)`. Defaults to 2:30 every
+morning. Set to `no` to avoid creation of a cron job.
+
+NOTE: The `backup` and `pack` cronjobs are added for the `bika_daemon` user. To
+      see them, you have to type `sudo crontab -u bika_daemon -l`. Please ensure
+      that the `bika_plone_backup_path` is accessible for this user, otherwise
+      this won't work.
 
     bika_plone_keep_backups: 5
 
 How many generations of full backups do you wish to keep? Defaults to `5`.
+
+    bika_plone_keep_blob_days: 21
+
+How many days of blob backups do you wish to keep? This is typically set to
+keep_backups * days_between_packs days. Default is `21`.
+
+    bika_plone_pack_at:
+      minute: 30
+      hour: 1
+      weekday: 7
+
+When do you wish to run the ZEO pack operation? Specify minute, hour and weekday
+specifications for a valid cron time. See CRONTAB(5). Defaults to 1:30 Sunday
+morning. Set to no to avoid creation of a cron job.
+
+    bika_plone_keep_days: 3
+
+How many days of undo information do you wish to keep when you pack the database. Defaults to `3`.
+
+
+### ZEO Cluster Setup
 
     bika_plone_client_count: 2
 
@@ -177,27 +247,8 @@ Defines the objects to keep in the ZODB cache.
 
 Note: A higher value consumes more RAM
 
-    bika_plone_buildout_extra: |
-      allow-picked-versions = false
-      socket-timeout = 5
 
-Allows you to add settings to the automatically generated buildout. Any text
-specified this way is inserted at the end of the ``[buildout]`` part and before
-any of the other parts. Defaults to empty.
-
-    bika_plone_sources =
-      -  "my.package = svn http://example.com/svn/my.package/trunk update=true"
-      -  "some.other.package = git git://example.com/git/some.other.package.git rev=1.1.5"
-
-This setting allows you to check out and include repository-based sources in
-your buildout.
-
-Source specifications, a list of strings
-in [mr.developer](https://pypi.python.org/pypi/mr.developer) sources format. If
-you specify plone_sources, the mr.developer extension will be used with
-auto-checkout set to "*".
-
-## Supervisor HTTP
+### Supervisor HTTP
 
 This role can enable or disable the HTTP UI of supervisor, which is accessible
 on `http://<server-ip>/supervisor/`.

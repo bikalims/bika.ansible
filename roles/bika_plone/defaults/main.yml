@@ -1,7 +1,7 @@
 ---
 
 # Convenience variables for easy overwriting
-bika_plone_version: "4.3.8"
+bika_plone_version: "4.3.11"
 bika_user: bika
 bika_group: bika
 bika_daemon_user: bika_daemon
@@ -14,8 +14,10 @@ bika_plone_var_path: "/home/{{ bika_user }}/data"
 bika_plone_backup_path: "{{ bika_plone_var_path }}"
 bika_plone_additional_eggs:
   - bika.lims
+  - Products.PloneHotfix20161129
+  - Products.PloneHotfix20170117
 bika_plone_additional_versions:
-  - bika.lims=3.1.11
+  - bika.lims=3.1.13
 bika_plone_zcml_slugs: []
 bika_plone_extension_profiles: []
 bika_plone_client_extras:
@@ -34,13 +36,22 @@ bika_supervisor_http_port: "127.0.0.1:9001"
 bika_supervisor_http_user: "admin"
 bika_supervisor_http_pass: "admin"
 
-# Backup
+# DB Pack
+bika_plone_pack_at:
+  minute: 30
+  hour: 1
+  weekday: 7
+
+bika_plone_keep_days: 3
+
+# DB Backup
 bika_plone_backup_at:
   minute: 30
   hour: 2
   weekday: "*"
 
 bika_plone_keep_backups: 5
+bika_plone_keep_blob_days: 21
 
 # Bika Monitoring: Defined in an extras section to be independent if someone
 # overwrites `bika_plone_additional_eggs`
@@ -67,6 +78,9 @@ bika_plone_config:
     plone_backup_path: "{{ bika_plone_backup_path }}"
     plone_backup_at: "{{ bika_plone_backup_at }}"
     plone_keep_backups: "{{ bika_plone_keep_backups }}"
+    plone_keep_blob_days: "{{ bika_plone_keep_blob_days }}"
+    plone_pack_at: "{{ bika_plone_pack_at }}"
+    plone_keep_days: "{{ bika_plone_keep_days }}"
     plone_additional_eggs: "{{ bika_plone_additional_eggs + bika_monitoring_eggs }}"
     plone_zcml_slugs: "{{ bika_plone_zcml_slugs + bika_monitoring_zcml }}"
     plone_additional_versions: "{{ bika_plone_additional_versions + bika_monitoring_versions }}"

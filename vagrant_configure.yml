@@ -6,6 +6,7 @@ bika_plone_additional_eggs:
   - bika.lims
   - graphite.theme
   - Products.PloneHotfix20161129
+  - Products.PloneHotfix20170117
 bika_plone_additional_versions:
    - CairoSVG=1.0.20
 bika_plone_extension_profiles: []
@@ -13,8 +14,25 @@ bika_plone_client_count: 2
 bika_plone_initial_password: admin
 bika_plone_zcml_slugs: []
 bika_plone_sources:
-  - "bika.lims = git https://github.com/bikalabs/bika.lims.git"
-  - "graphite.theme = git https://github.com/naralabs/graphite.theme.git"
+  - "bika.lims = git git@github.com:ridingbytes/bika.lims.git"
+  - "graphite.theme = git git@github.com:ridingbytes/graphite.theme.git"
+
+# DB Pack
+bika_plone_pack_at:
+  minute: 30
+  hour: 1
+  weekday: 7
+
+bika_plone_keep_days: 3
+
+# DB Backup
+bika_plone_backup_at:
+  minute: 30
+  hour: 2
+  weekday: "*"
+
+bika_plone_keep_backups: 5
+bika_plone_keep_blob_days: 21
 
 # Supervisor HTTP UI
 bika_supervisor_with_http: yes
