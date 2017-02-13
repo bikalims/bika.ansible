@@ -7,13 +7,13 @@
 
 - debug:
     msg: "HAProxy Version is < 1.6 -> {{ haproxy_version.stdout }}"
-  when: haproxy_version.stdout < 1.6
+  when: haproxy_version.stdout|float < 1.6
   tags: bika-haproxy-version
 
 - debug:
     msg: "HAProxy Version is > 1.6 -> {{ haproxy_version.stdout }}"
   tags: bika-haproxy-version
-  when: haproxy_version.stdout >= 1.6
+  when: haproxy_version.stdout|float >= 1.6
 
 - name: Copy Bika HAProxy for versions < 1.6
   template:
@@ -21,7 +21,7 @@
     dest: /etc/haproxy/haproxy.cfg
     mode: 0644
   notify: restart haproxy
-  when: haproxy_version.stdout < 1.6
+  when: haproxy_version.stdout|float < 1.6
   tags: bika-haproxy
 
 - name: Copy Bika HAProxy for versions >= 1.6
@@ -30,5 +30,5 @@
     dest: /etc/haproxy/haproxy.cfg
     mode: 0644
   notify: restart haproxy
-  when: haproxy_version.stdout >= 1.6
+  when: haproxy_version.stdout|float >= 1.6
   tags: bika-haproxy
