@@ -83,25 +83,25 @@ bika_munin_plugins:
   - src: /usr/share/munin/plugins/haproxy_ng
     dest: /etc/munin/plugins/haproxy_ng
   # VARNISH PLUGINS
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_backend_traffic
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_bad
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_expunge
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_hit_rate
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_memory_usage
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_objects
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_request_rate
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_threads
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_transfer_rates
-  - src: /etc/munin/contrib/plugins/varnish4/varnish4_
+  - src: /etc/munin/contrib/plugins/varnish/varnish4_
     dest: /etc/munin/plugins/varnish4_uptime
   # POSTFIX PLUGINS
   - src: /usr/share/munin/plugins/postfix_mailqueue
