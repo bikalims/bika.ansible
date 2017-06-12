@@ -1,8 +1,16 @@
 vcl 4.0;
 
+### Debugging Varnish
+#
 # Uncomment to use Logging, e.g: std.log("Log Message");
-# Show logs on the Server: $ varnishlog | grep VCL_Log
 # import std;
+#
+# Show logs on the Server:
+# varnishlog -i VCL_Log
+#
+# Example:
+# std.log("Cookies: " + req.http.Cookie);
+###
 
 # This is a BIKA VCL configuration file for varnish.
 # http://docs.plone.org/manage/deploying/caching/varnish4.html
@@ -31,28 +39,20 @@ sub vcl_recv {
         return (purge);
     }
 
-    # FIXIT: No caching if Graphite Theme is installed,
-    # Otherwise the Theme activation/deactivation does not work
-    if (req.http.Cookie ~ "bika.graphite.disabled") {
-        return (pass);
-    }
-
+    # NB: No Cookie sanitization at the moment, as Bika LIMS maintains currently too many Cookies, which can not be matched easily.
+    # See: https://github.com/bikalabs/bika.lims/issues/#2082
+    # if (req.http.Cookie) {
+    #     set req.http.Cookie = ";" + req.http.Cookie;
+    #     set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+    #     set req.http.Cookie = regsuball(req.http.Cookie, ";(bika.graphite.disabled)=", "; \1=");
+    #     set req.http.Cookie = regsuball(req.http.Cookie, ";(statusmessages|__ac|_ZopeId|__cp)=", "; \1=");
+    #     set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+    #     set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
     #
-    # Do Plone cookie sanitization, so cookies do not destroy cacheable anonymous pages
-    #
-    if (req.http.Cookie) {
-        set req.http.Cookie = ";" + req.http.Cookie;
-        set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-        # Keep graphite.theme specific cookie
-        set req.http.Cookie = regsuball(req.http.Cookie, "; bika.graphite.disabled=", "; bika.graphite.disabled=\1");
-        set req.http.Cookie = regsuball(req.http.Cookie, ";(statusmessages|__ac|_ZopeId|__cp)=", "; \1=");
-        set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-        set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-
-        if (req.http.Cookie == "") {
-            unset req.http.Cookie;
-        }
-    }
+    #     if (req.http.Cookie == "") {
+    #         unset req.http.Cookie;
+    #     }
+    # }
 
     if (req.method != "GET" &&
       req.method != "HEAD" &&
