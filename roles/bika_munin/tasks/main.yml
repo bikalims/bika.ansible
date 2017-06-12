@@ -7,9 +7,9 @@
   with_items: "{{ bika_munin_dependencies }}"
 
 - name: Flush existing htpasswd file
- file:
-   path: /etc/munin/munin-htpasswd
-   state: absent
+  file:
+    path: /etc/munin/munin-htpasswd
+    state: absent
 
 - name: Create Munin user via htpasswd.
   htpasswd:
