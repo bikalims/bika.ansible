@@ -1,0 +1,273 @@
+{# convenient module variables #}
+{% set plone_client_count = instance_config.plone_client_count %}
+{% set plone_client_base_port = instance_config.plone_client_base_port  %}
+{% set plone_version = instance_config.plone_version %}
+{% set plone_sources = instance_config.plone_sources %}
+{% set plone_zeo_ip = instance_config.plone_zeo_ip %}
+{% set plone_zeo_port = instance_config.plone_zeo_port %}
+[buildout]
+
+# For extensive comments, see the source for the Unified Installer:
+# https://github.com/plone/Installers-UnifiedInstaller
+
+extends =
+    https://dist.plone.org/release/{{ instance_config.plone_version }}/versions.cfg
+
+eggs-directory=../buildout-cache/eggs
+download-cache=../buildout-cache/downloads
+
+newest = false
+prefer-final = true
+show-picked-versions = true
+versions = versions
+
+find-links =
+    http://dist.plone.org
+    http://download.zope.org/ppix/
+    http://download.zope.org/distribution/
+    http://effbot.org/downloads
+    http://dist.plone.org/release/{{ instance_config.plone_version }}
+{% if instance_config.plone_extra_find_links %}
+{% for link in instance_config.plone_extra_find_links %}
+    {{ link }}
+{% endfor %}
+{% endif %}
+
+extensions =
+    buildout.sanitycheck
+{% if plone_sources %}
+    mr.developer
+
+auto-checkout = *
+{% endif %}
+
+effective-user = {{ instance_config.plone_daemon_user }}
+buildout-user = {{ instance_config.plone_buildout_user }}
+
+eggs =
+    Plone
+    Pillow
+{% if instance_config.plone_version >= '5.0' %}
+{% if instance_config.plone_version | version_compare('5.0.6', '<=') %}
+    Products.PloneHotfix20160830
+{% endif %}
+{% if instance_config.plone_version | version_compare('5.0.5', '<=') %}
+    Products.PloneHotfix20160419
+{% endif %}
+{% endif %}
+{% if instance_config.plone_version < '5.0' %}
+{% if instance_config.plone_version | version_compare('4.3.11', '<=') %}
+    Products.PloneHotfix20160830
+{% endif %}
+{% if instance_config.plone_version | version_compare('4.3.10', '<=') %}
+    Products.PloneHotfix20160419
+{% endif %}
+{% endif %}
+{% if instance_config.plone_version | version_compare('4.3.8', '<') %}
+    plone4.csrffixes
+{% endif %}
+{% if instance_config.plone_additional_eggs %}
+{% for egg in instance_config.plone_additional_eggs %}
+    {{ egg }}
+{% endfor %}
+{% endif %}
+
+zcml =
+{% if instance_config.plone_zcml_slugs %}
+{% for slug in instance_config.plone_zcml_slugs %}
+    {{ slug }}
+{% endfor %}
+{% endif %}
+
+var-dir={{ plone_instance_var_path }}
+
+backups-dir={{ plone_instance_backup_path }}
+
+user=admin:{{ instance_config.plone_initial_password }}
+
+{% if instance_config.plone_environment_vars %}
+environment-vars =
+    PYTHON_EGG_CACHE ${buildout:var-dir}/.python-eggs
+    TZ {{ instance_config.plone_timezone }}
+{% for evar in instance_config.plone_environment_vars %}
+    {{ evar }}
+{% endfor %}
+{% endif %}
+
+parts =
+{%if instance_config.plone_install_zeoserver %}
+    zeoserver
+{% endif %}
+{% for client in range(1, instance_config.plone_client_count|int + 1) %}
+    client{{ client }}
+{% endfor %}
+    client_reserved
+    backup
+    zopepy
+    precompiler
+    setpermissions
+{% for key in instance_config.plone_extra_parts.keys() %}
+    {{ key }}
+{% endfor %}
+
+{{ instance_config.plone_buildout_extra }}
+
+{% if instance_config.plone_sources %}
+[sources]
+{% for source in instance_config.plone_sources %}
+{{ source }}
+{% endfor %}
+{% endif %}
+
+
+{%if instance_config.plone_install_zeoserver %}
+[zeoserver]
+recipe = plone.recipe.zeoserver
+zeo-address = {{ plone_zeo_ip }}:{{ plone_zeo_port }}
+effective-user = ${buildout:effective-user}
+environment-vars = ${buildout:environment-vars}
+var = ${buildout:var-dir}
+blob-storage = ${buildout:var-dir}/blobstorage
+zeo-log     = ${buildout:var-dir}/zeoserver/zeoserver.log
+pid-file    = ${buildout:var-dir}/zeoserver/zeoserver.pid
+socket-name = ${buildout:var-dir}/zeoserver/zeo.zdsock
+{% endif %}
+
+
+[client_base]
+user = ${buildout:user}
+effective-user = ${buildout:effective-user}
+debug-mode = off
+verbose-security = off
+deprecation-warnings = off
+
+var = ${buildout:var-dir}
+blob-storage = ${:var}/blobstorage
+
+event-log-max-size = 5 MB
+event-log-old-files = 5
+access-log-max-size = 20 MB
+access-log-old-files = 5
+
+eggs =
+    ${buildout:eggs}
+
+zcml = ${buildout:zcml}
+
+products = ${buildout:directory}/products
+
+environment-vars = ${buildout:environment-vars}
+
+zeo-client = true
+zeo-address = {{ plone_zeo_ip }}:{{ plone_zeo_port }}
+{%if instance_config.plone_install_zeoserver %}
+shared-blob = on
+{% endif %}
+
+http-fast-listen = off
+
+event-log = ${buildout:var-dir}/${:_buildout_section_name_}/event.log
+z2-log    = ${buildout:var-dir}/${:_buildout_section_name_}/Z2.log
+pid-file  = ${buildout:var-dir}/${:_buildout_section_name_}/${:_buildout_section_name_}.pid
+lock-file = ${buildout:var-dir}/${:_buildout_section_name_}/${:_buildout_section_name_}.lock
+
+zodb-cache-size = {{ instance_config.plone_zodb_cache_size }}
+zserver-threads = {{ instance_config.plone_zserver_threads }}
+
+
+[client1]
+<= client_base
+recipe = plone.recipe.zope2instance
+http-address = 127.0.0.1:{{ instance_config.plone_client_base_port }}
+zeo-client-client = client1
+
+{% for client in range(2, instance_config.plone_client_count|int + 1) %}
+[client{{ client }}]
+<= client_base
+recipe = plone.recipe.zope2instance
+http-address = 127.0.0.1:{{ "%s" % (instance_config.plone_client_base_port|int + loop.index) }}
+zeo-client-client = client{{ client }}
+
+{% endfor %}
+
+[client_reserved]
+<= client_base
+recipe = plone.recipe.zope2instance
+http-address = 127.0.0.1:{{ "%s" % (instance_config.plone_client_base_port|int + instance_config.plone_client_count|int) }}
+
+
+[backup]
+recipe = collective.recipe.backup
+location = ${buildout:backups-dir}/backups
+blobbackuplocation = ${buildout:backups-dir}/blobstoragebackups
+snapshotlocation = ${buildout:backups-dir}/snapshotbackups
+blobsnapshotlocation = ${buildout:backups-dir}/blobstoragesnapshots
+datafs = ${buildout:var-dir}/filestorage/Data.fs
+blob-storage = ${buildout:var-dir}/blobstorage
+keep = {{ instance_config.plone_keep_backups }}
+keep_blob_days = {{ instance_config.plone_keep_blob_days }}
+rsync_options = {{ instance_config.plone_rsync_backup_options }}
+{% if instance_config.plone_backup_post_command|length() > 0 %}
+post_command =
+    {{ instance_config.plone_backup_post_command|indent(width=4, indentfirst=False) }}
+{% endif %}
+
+[setpermissions]
+recipe = plone.recipe.command
+command =
+    # Dummy references to force this to execute after referenced parts
+    echo ${backup:location} > /dev/null
+    chmod 600 .installed.cfg
+    # Make sure anything we've created in var is r/w by our group, but no-one else
+    chmod -R ug+rwX,o-rwx ${buildout:var-dir}
+    chmod -R ug+rwX,o-rwx ${buildout:backups-dir}
+    chmod 754 ${buildout:directory}/bin/*
+update-command = ${:command}
+
+
+[zopepy]
+recipe = zc.recipe.egg
+eggs = ${buildout:eggs}
+interpreter = zopepy
+scripts = zopepy
+
+
+[precompiler]
+recipe = plone.recipe.precompiler
+eggs = ${buildout:eggs}
+compile-mo-files = true
+extra-paths = ${buildout:directory}/products
+
+
+{% for key, value in instance_config.plone_extra_parts.items() %}
+[{{ key }}]
+{{ value }}
+
+{% endfor %}
+
+[versions]
+buildout.sanitycheck = 1.0.2
+collective.recipe.backup = 2.20
+plone.recipe.command = 1.1
+plone.recipe.precompiler = 0.6
+Products.PloneHotfix20160830 = 1.3
+Products.PloneHotfix20160419 = 1.0
+{% if instance_config.plone_version < '5.0' %}
+setuptools = 7.0
+{% if instance_config.plone_version | version_compare('4.3.8', '<') %}
+plone4.csrffixes = 1.0.8
+plone.protect = 3.0.17
+plone.keyring = 3.0.1
+plone.locking = 2.0.9
+{% endif %}
+{% endif %}
+{% if instance_config.plone_version >= '5.0' %}
+# Use virtualenv's setuptools and zc.buildout
+setuptools =
+zc.buildout =
+{% endif %}
+{% if instance_config.plone_additional_versions %}
+{% for eversion in instance_config.plone_additional_versions %}
+{{ eversion}}
+{% endfor %}
+{% endif %}

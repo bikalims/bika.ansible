@@ -102,3 +102,6 @@ customer_hosts.cfg
 # PyCharm
 .idea
 roles/tersmitten.postfix
+
+# vim
+.*.swp

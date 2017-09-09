@@ -1,0 +1,15 @@
+# Bika Plone
+bika_plone_version: "4.3.11"
+bika_plone_additional_eggs:
+  - bika.lims
+  - ace.lims
+bika_plone_additional_versions:
+   - CairoSVG=1.0.20
+bika_plone_extension_profiles:
+  - bika.lims:default
+bika_plone_client_count: 6
+bika_plone_initial_password: pee5IeTh4aiRee5
+bika_plone_sources:
+  - "bika.lims = git https://github.com/mikejmets/bika.lims.git branch=bika.lims.bc"
+  - "ace.lims = git https://github.com/mikejmets/ace.lims.git branch=master"
+bika_plone_timezone: "US/Pacific"
