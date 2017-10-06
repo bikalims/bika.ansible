@@ -40,19 +40,19 @@ sub vcl_recv {
     #
     # Do Plone cookie sanitization, so cookies do not destroy cacheable anonymous pages
     #
-    if (req.http.Cookie) {
-        set req.http.Cookie = ";" + req.http.Cookie;
-        set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-        # Keep graphite.theme specific cookie
-        set req.http.Cookie = regsuball(req.http.Cookie, "; bika.graphite.disabled=", "; bika.graphite.disabled=\1");
-        set req.http.Cookie = regsuball(req.http.Cookie, ";(statusmessages|__ac|_ZopeId|__cp)=", "; \1=");
-        set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-        set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+    #if (req.http.Cookie) {
+    #    set req.http.Cookie = ";" + req.http.Cookie;
+    #    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+    #    # Keep graphite.theme specific cookie
+    #    set req.http.Cookie = regsuball(req.http.Cookie, "; bika.graphite.disabled=", "; bika.graphite.disabled=\1");
+    #    set req.http.Cookie = regsuball(req.http.Cookie, ";(statusmessages|__ac|_ZopeId|__cp)=", "; \1=");
+    #    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+    #    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
-        if (req.http.Cookie == "") {
-            unset req.http.Cookie;
-        }
-    }
+    #    if (req.http.Cookie == "") {
+    #        unset req.http.Cookie;
+    #    }
+    #}
 
     if (req.method != "GET" &&
       req.method != "HEAD" &&
