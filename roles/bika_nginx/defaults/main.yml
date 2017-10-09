@@ -7,7 +7,7 @@ bika_nginx_sites_available: "{{ bika_nginx_path }}/sites-available"
 bika_nginx_sites_enabled: "{{ bika_nginx_path }}/sites-enabled"
 bika_nginx_conf: "{{ bika_nginx_path }}/nginx.conf"
 bika_nginx_extra_http_options: |
-  proxy_read_timeout 600s;
+  proxy_read_timeout 1200s;
 
 # VHOSTS
 bika_vhosts: []
