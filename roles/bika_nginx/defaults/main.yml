@@ -23,3 +23,4 @@ bika_ssl_certificate_key: /etc/ssl/private/ssl-cert-snakeoil.key
 nginx_remove_default_vhost: true
 nginx_server_names_hash_bucket_size: "256"
 nginx_client_max_body_size: "1024m"
+nginx_gzip: "on"
