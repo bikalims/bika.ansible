@@ -30,6 +30,7 @@ http {
 
     access_log  {{ nginx_access_log }};
 
+    gzip            {{ nginx_gzip }};
     sendfile        {{ nginx_sendfile }};
     tcp_nopush      {{ nginx_tcp_nopush }};
     tcp_nodelay     {{ nginx_tcp_nodelay }};

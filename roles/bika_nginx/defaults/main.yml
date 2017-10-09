@@ -7,7 +7,7 @@ bika_nginx_sites_available: "{{ bika_nginx_path }}/sites-available"
 bika_nginx_sites_enabled: "{{ bika_nginx_path }}/sites-enabled"
 bika_nginx_conf: "{{ bika_nginx_path }}/nginx.conf"
 bika_nginx_extra_http_options: |
-  proxy_read_timeout 600s;
+  proxy_read_timeout 1200s;
 
 # VHOSTS
 bika_vhosts: []
@@ -23,3 +23,4 @@ bika_ssl_certificate_key: /etc/ssl/private/ssl-cert-snakeoil.key
 nginx_remove_default_vhost: true
 nginx_server_names_hash_bucket_size: "256"
 nginx_client_max_body_size: "1024m"
+nginx_gzip: "on"
