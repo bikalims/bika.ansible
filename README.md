@@ -152,6 +152,22 @@ This role depends on the following Ansible Roles:
 - [Postfix](https://galaxy.ansible.com/tersmitten/postfix)
 
 
+## Examples
+
+To add worker zeo client, in configure.ymli add:
+
+bika_plone_extra_parts:
+    worker: |
+        <= client_base
+        recipe = plone.recipe.zope2instance
+        http-address = 127.0.0.1:{{ '%s' % (bika_plone_client_base_port|int + bika_plone_client_count|int + 1) }}
+
+To add zeo client caching, in configure.ymli add:
+
+bika_plone_client_extras: |
+    zeo-client-client = ${:_buildout_section_name_}
+
+
 ## Troubleshooting
 
 Problem:
