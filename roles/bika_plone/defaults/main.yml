@@ -32,6 +32,7 @@ bika_plone_buildout_extra:
 bika_plone_buildout_extra_parts:
 bika_plone_sources:
 bika_plone_environment_vars:
+bika_plone_timezone:
 
 # Supervisor Daemon HTTP
 bika_supervisor_with_http: no
@@ -99,3 +100,4 @@ bika_plone_config:
     plone_buildout_extra_parts: "{{ bika_plone_buildout_extra_parts }}"
     plone_sources: "{{ bika_plone_sources }}"
     plone_environment_vars: "{{ bika_plone_environment_vars }}"
+    plone_timezone: "{{ bika_plone_timezone }}"
